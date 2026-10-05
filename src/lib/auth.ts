@@ -22,7 +22,7 @@ export const getCurrentUser = cache(async (): Promise<User | null> => {
 export const homePathFor = (user: Pick<User, 'role' | 'approved'>): string => {
   if (user.role === 'admin') return '/admin'
   if (user.role === 'educator') return isApprovedEducator(user) ? '/educator' : '/awaiting-approval'
-  return '/practice'
+  return '/dashboard'
 }
 
 /**

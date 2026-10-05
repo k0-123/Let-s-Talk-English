@@ -45,6 +45,8 @@ export const HistoryList = ({
                   <Badge variant="secondary">{categoryNames[entry.categoryId]}</Badge>
                 )}
                 {entry.markedBy === 'educator' && <Badge variant="outline">Covered with educator</Badge>}
+                {entry.confidence && <span title="Self-rated confidence">Confidence {entry.confidence}/5</span>}
+                {entry.speakingSeconds ? <span title="Time on the speaking timer">{Math.max(1, Math.round(entry.speakingSeconds / 60))} min speaking</span> : null}
                 {showCycle && <span>Cycle {entry.cycle}</span>}
               </div>
             </div>

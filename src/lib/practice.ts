@@ -204,9 +204,15 @@ export const findCurrentLog = async (
 export const recordPractice = async (
   payload: Payload,
   actor: Actor,
-  options: { studentId: string; setId: string },
+  options: { studentId: string; setId: string; confidence?: number | null; speakingSeconds?: number | null },
 ): Promise<{ log: PracticeLog; created: boolean }> => {
   const { studentId, setId } = options
+  const confidence =
+    options.confidence && Number.isInteger(options.confidence) && options.confidence >= 1 && options.confidence <= 5
+      ? options.confidence
+      : null
+  const speakingSeconds =
+    options.speakingSeconds && options.speakingSeconds > 0 ? Math.min(3600, Math.round(options.speakingSeconds)) : null
 
   let student: User
   if (isStudent(actor)) {
@@ -231,7 +237,7 @@ export const recordPractice = async (
   try {
     const log = await payload.create({
       collection: 'practice-logs',
-      data: { student: studentId, questionSet: setId } as PracticeLog,
+      data: { student: studentId, questionSet: setId, confidence, speakingSeconds } as PracticeLog,
       ...asQuery(actor),
     })
     return { log, created: true }
@@ -251,6 +257,8 @@ export type HistoryEntry = {
   practisedAt: string
   markedBy: PracticeLog['markedBy']
   cycle: number
+  confidence: number | null
+  speakingSeconds: number | null
 }
 
 export type HistoryPage = {
@@ -292,6 +300,8 @@ export const getHistory = async (
         practisedAt: log.practisedAt,
         markedBy: log.markedBy,
         cycle: log.cycle,
+        confidence: log.confidence ?? null,
+        speakingSeconds: log.speakingSeconds ?? null,
       }
     }),
     totalDocs: result.totalDocs,
