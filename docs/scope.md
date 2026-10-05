@@ -66,8 +66,14 @@ The app is a responsive website that works on phones and computers. It is free t
 
 ## Out of scope for V1
 
-IELTS Writing, AI or human evaluation of answers, audio recording, Android / iOS apps, payments and subscriptions,
-more than one educator per student, notifications beyond the emails listed above, and analytics dashboards.
+IELTS Writing, human evaluation of answers, uploading or storing audio on the server, payments and subscriptions,
+more than one educator per student, and notifications beyond the emails listed above.
+
+**Added after V1 (version 4):** AI feedback on answers (text only; the client pays Anthropic per request, see
+[ai-feedback.md](ai-feedback.md)), in-browser recording that stays on the device, progress dashboards,
+assignments, private educator notes and CSV exports, and a native Android/iOS app for students and educators
+([mobile-app-plan.md](mobile-app-plan.md)). Publishing the app needs the client's own Google Play and Apple
+developer accounts.
 
 Any new request goes through a written change request with its own price and timeline.
 

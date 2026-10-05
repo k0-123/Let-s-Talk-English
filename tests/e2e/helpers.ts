@@ -49,11 +49,16 @@ export const getVerificationToken = async (email: string): Promise<string> => {
   return token
 }
 
-export const login = async (page: Page, email: string, password = PASSWORD) => {
+/**
+ * Logs in through the form. By default waits until the app has left the login
+ * page; pass `expectFailure` when the test checks a refused login.
+ */
+export const login = async (page: Page, email: string, options: { password?: string; expectFailure?: boolean } = {}) => {
   await page.goto('/login')
   await page.getByLabel('Email').fill(email)
-  await page.getByLabel('Password').fill(password)
+  await page.getByLabel('Password').fill(options.password ?? PASSWORD)
   await page.getByRole('button', { name: 'Log in' }).click()
+  if (!options.expectFailure) await page.waitForURL((url) => !url.pathname.startsWith('/login'), { timeout: 30_000 })
 }
 
 export const logout = async (page: Page) => {

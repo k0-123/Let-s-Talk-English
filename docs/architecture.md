@@ -34,6 +34,12 @@ Defined in `src/collections/`. Types are generated into `src/payload-types.ts` (
 | `question-sets` | topic, category, status (`draft` / `published`), questions[] {question, answer}, vocabulary[] {term, meaning}, tips, image (→ media), code (optional unique reference used by imports) |
 | `practice-logs` | student, questionSet, practisedAt, markedBy (`student` / `educator` / `admin`), cycle |
 | `media` | uploaded images (local `./media` folder), alt text |
+| `assignments` | educator, student, questionSet, note, dueDate; unique (student, questionSet). "Done" is derived, not stored |
+| `student-notes` | educator, student, body (private to the author) |
+| `ai-feedback` | student, questionSet, questionIndex, question, answerText, result (JSON), model, token counts |
+
+Users also have `weeklyGoal`, `theme` and `onboardingDismissed`; practice logs have `confidence` (1–5) and
+`speakingSeconds`.
 
 ## The core rule: never repeat a set
 
@@ -46,6 +52,33 @@ Defined in `src/collections/`. Types are generated into `src/payload-types.ts` (
 - The log's `cycle` and date are always set on the server (a `beforeValidate` hook), never taken from the browser.
 - **Cycles:** "Start a new practice cycle" increments `users.cycle`. Every set becomes new again, and old logs stay
   in the history with their cycle number.
+
+## Version 4 features
+
+| Feature | Where |
+|---|---|
+| Streaks, activity calendar, weekly goal, activity status | `src/lib/progress.ts`, days counted in `TZ` (`src/lib/dates.ts`) |
+| Assignments (done = practised in the current cycle) | `src/lib/assignments.ts` |
+| Private notes | `src/lib/notes.ts` |
+| AI feedback | `src/lib/ai-feedback.ts`, see [ai-feedback.md](ai-feedback.md) |
+| CSV exports | `src/lib/exports.ts`, route handlers under `src/app/(frontend)/educator/**/export` and `/exports/practice-logs.csv` |
+| Admin usage overview | `src/lib/stats.ts`, `src/components/admin/Overview.tsx` (Payload `beforeDashboard`) |
+| Speaking tools (timer, recorder, transcript) | `src/components/speaking/` (client-only browser APIs; audio never uploaded) |
+| Charts | `src/components/charts/` (hand-built SVG; one sequential hue, text alternatives) |
+| Theme | `src/lib/theme.ts`: a cookie read on the server plus a tiny pre-paint script, so there is no flash |
+
+## Mobile app
+
+The Android/iOS app for students and educators lives in `mobile/` (Expo, React Native, Expo Router). It has its
+own `package.json` and is never part of the website build. Details: [mobile-app-plan.md](mobile-app-plan.md) and
+[mobile/README.md](../mobile/README.md).
+
+| Part | Where |
+|---|---|
+| Sign-in | Payload's REST API (`/api/users/login`, sign-up, forgot password). The token is kept in the phone's secure storage and sent as `Authorization: JWT …`; no cookie is involved, so the CSRF check doesn't apply |
+| Everything else | The app API, `src/endpoints/app.ts`: Payload custom endpoints under `/api/app/*`. Each one checks the role, then calls the same `src/lib/` functions as the website with the user's own access (`overrideAccess: false`) |
+| Cross-origin calls | Only the app's web preview needs them; allow its address with `CORS_ORIGINS` |
+| Tests | `tests/int/app-api.int.spec.ts` (every endpoint), `mobile/__tests__/` (Jest), `tests/e2e/mobile-app.e2e.spec.ts` (the app's web build against the server) |
 
 ## Where access is enforced
 
@@ -85,6 +118,7 @@ move it to Postgres or Redis.
 src/
   access/              role helpers shared by collections, hooks and pages
   collections/         Payload collections: fields, access rules, hooks
+  endpoints/app.ts     the mobile app's API (/api/app/*)
   email/templates.ts   all email HTML
   lib/
     practice.ts        next sets, record practice, history, cycles
@@ -95,11 +129,12 @@ src/
     (frontend)/        the student, educator and import screens, and their server actions
     (payload)/         Payload admin panel and REST API (generated, don't edit)
   migrations/          database migrations (generated with npm run migrate:create)
-scripts/               seed.ts, import-sets.ts
+scripts/               seed.ts, import-sets.ts, serve-static.mjs (serves the app's web build in tests)
 tests/
-  unit/                importer parsing
-  int/                 access rules, practice rules, importer against Postgres
-  e2e/                 Playwright journeys
+  unit/                importer parsing, progress maths
+  int/                 access rules, practice rules, importer, app API against Postgres
+  e2e/                 Playwright journeys (website, and the app's web build)
+mobile/                the Android/iOS app (Expo); see mobile/README.md
 ```
 
 ## Database schema changes

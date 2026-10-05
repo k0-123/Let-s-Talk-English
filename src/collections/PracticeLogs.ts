@@ -124,6 +124,20 @@ export const PracticeLogs: CollectionConfig = {
       ],
     },
     {
+      name: 'confidence',
+      type: 'number',
+      min: 1,
+      max: 5,
+      admin: { description: 'How confident the student felt (1–5), if they rated it.' },
+    },
+    {
+      name: 'speakingSeconds',
+      type: 'number',
+      min: 0,
+      max: 3600,
+      admin: { description: 'Time on the speaking timer, if used.' },
+    },
+    {
       name: 'cycle',
       type: 'number',
       required: true,

@@ -1,4 +1,4 @@
-import type { Payload, Where } from 'payload'
+import { APIError, ValidationError, type Payload, type Where } from 'payload'
 
 import { isApprovedEducator, isStudent, relationId } from '@/access'
 import type { Category, PracticeLog, QuestionSet, User } from '@/payload-types'
@@ -116,15 +116,18 @@ export const findUnpractisedSets = async (
   options: {
     student: Pick<User, 'id' | 'cycle'>
     categoryId?: string | null
+    /** Matches part of the topic, case-insensitive. */
+    search?: string | null
     limit?: number
     page?: number
   },
 ): Promise<UnpractisedSetsResult> => {
-  const { student, categoryId, limit = NEW_SETS_BATCH_SIZE, page = 1 } = options
+  const { student, categoryId, search, limit = NEW_SETS_BATCH_SIZE, page = 1 } = options
   const practised = await getPractisedSetIds(payload, actor, student.id, student.cycle ?? 1)
 
   const conditions: Where[] = [{ status: { equals: 'published' } }]
   if (categoryId) conditions.push({ category: { equals: categoryId } })
+  if (search?.trim()) conditions.push({ topic: { like: search.trim().slice(0, 80) } })
   if (practised.length) conditions.push({ id: { not_in: practised } })
 
   const result = await payload.find({
@@ -204,9 +207,15 @@ export const findCurrentLog = async (
 export const recordPractice = async (
   payload: Payload,
   actor: Actor,
-  options: { studentId: string; setId: string },
+  options: { studentId: string; setId: string; confidence?: number | null; speakingSeconds?: number | null },
 ): Promise<{ log: PracticeLog; created: boolean }> => {
   const { studentId, setId } = options
+  const confidence =
+    options.confidence && Number.isInteger(options.confidence) && options.confidence >= 1 && options.confidence <= 5
+      ? options.confidence
+      : null
+  const speakingSeconds =
+    options.speakingSeconds && options.speakingSeconds > 0 ? Math.min(3600, Math.round(options.speakingSeconds)) : null
 
   let student: User
   if (isStudent(actor)) {
@@ -231,7 +240,7 @@ export const recordPractice = async (
   try {
     const log = await payload.create({
       collection: 'practice-logs',
-      data: { student: studentId, questionSet: setId } as PracticeLog,
+      data: { student: studentId, questionSet: setId, confidence, speakingSeconds } as PracticeLog,
       ...asQuery(actor),
     })
     return { log, created: true }
@@ -239,6 +248,9 @@ export const recordPractice = async (
     // A parallel request may have created the same log (unique index).
     const raced = await findCurrentLog(payload, actor, student, setId)
     if (raced) return { log: raced, created: false }
+    if (error instanceof ValidationError || error instanceof APIError) {
+      throw new PracticeError('That question set is not available.')
+    }
     throw error
   }
 }
@@ -251,6 +263,8 @@ export type HistoryEntry = {
   practisedAt: string
   markedBy: PracticeLog['markedBy']
   cycle: number
+  confidence: number | null
+  speakingSeconds: number | null
 }
 
 export type HistoryPage = {
@@ -292,6 +306,8 @@ export const getHistory = async (
         practisedAt: log.practisedAt,
         markedBy: log.markedBy,
         cycle: log.cycle,
+        confidence: log.confidence ?? null,
+        speakingSeconds: log.speakingSeconds ?? null,
       }
     }),
     totalDocs: result.totalDocs,

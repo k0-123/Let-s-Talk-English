@@ -13,10 +13,10 @@ export const AuthCard = ({
   children: ReactNode
   footer?: ReactNode
 }) => (
-  <div className="mx-auto w-full max-w-md">
+  <div className="mx-auto w-full max-w-md px-4 py-10 sm:py-16">
     <Card>
       <CardHeader>
-        <CardTitle className="text-2xl">{title}</CardTitle>
+        <CardTitle className="text-2xl tracking-tight">{title}</CardTitle>
         {description && <CardDescription>{description}</CardDescription>}
       </CardHeader>
       <CardContent>{children}</CardContent>

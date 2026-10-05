@@ -1,70 +1,68 @@
+import { LogOut, Settings, UserRound } from 'lucide-react'
 import Link from 'next/link'
 
 import { logoutAction } from '@/app/(frontend)/auth-actions'
+import { Logo } from '@/components/shell/logo'
+import { NavLinks } from '@/components/shell/nav-links'
+import { Avatar } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
-import { SITE_NAME } from '@/lib/constants'
 import type { User } from '@/payload-types'
 
-const linksFor = (user: User | null): { href: string; label: string }[] => {
-  if (!user) return []
-  if (user.role === 'student') {
-    return [
-      { href: '/practice', label: 'Practice' },
-      { href: '/history', label: 'History' },
-      { href: '/join', label: 'My educator' },
-    ]
-  }
-  if (user.role === 'educator' && user.approved) return [{ href: '/educator', label: 'My students' }]
-  if (user.role === 'admin') {
-    return [
-      { href: '/admin', label: 'Admin panel' },
-      { href: '/import', label: 'Bulk import' },
-    ]
-  }
-  return []
-}
+const roleLabel: Record<User['role'], string> = { student: 'Student', educator: 'Educator', admin: 'Admin' }
 
-export const SiteHeader = ({ user }: { user: User | null }) => {
-  const links = linksFor(user)
-  return (
-    <header className="border-b bg-card">
-      <div className="mx-auto flex max-w-4xl flex-wrap items-center gap-x-4 gap-y-2 px-4 py-3">
-        <Link href="/" className="mr-auto text-base font-semibold text-primary">
-          {SITE_NAME}
-        </Link>
-        {user ? (
-          <form action={logoutAction} className="order-2 sm:order-3">
-            <Button type="submit" variant="ghost" size="sm">
-              Log out
-            </Button>
-          </form>
-        ) : (
-          <nav className="flex gap-2">
-            <Button asChild variant="ghost" size="sm">
-              <Link href="/login">Log in</Link>
-            </Button>
-            <Button asChild size="sm">
-              <Link href="/register">Sign up</Link>
-            </Button>
-          </nav>
-        )}
-        {links.length > 0 && (
-          <nav
-            aria-label="Main"
-            className="order-3 -mx-1 flex w-full gap-1 overflow-x-auto sm:order-2 sm:mx-0 sm:w-auto"
-          >
-            {links.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="rounded-md px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-accent hover:text-foreground"
-              >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
-        )}
+const UserMenu = ({ user }: { user: User }) => (
+  <details className="group relative">
+    <summary
+      aria-label="Account menu"
+      className="flex items-center gap-2 rounded-full p-0.5 pr-2 transition-colors hover:bg-accent sm:pr-3"
+    >
+      <Avatar name={user.name} className="size-8 text-xs" />
+      <span className="hidden max-w-32 truncate text-sm font-medium sm:block">{user.name.split(' ')[0]}</span>
+    </summary>
+    <div className="absolute right-0 z-50 mt-2 w-60 overflow-hidden rounded-xl border bg-card shadow-lg">
+      <div className="border-b px-4 py-3">
+        <p className="truncate text-sm font-semibold">{user.name}</p>
+        <p className="truncate text-xs text-muted-foreground">{user.email}</p>
+        <p className="mt-1 text-xs font-medium text-primary">{roleLabel[user.role]}</p>
       </div>
-    </header>
-  )
-}
+      <div className="p-1">
+        <Link href="/account" className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm hover:bg-accent">
+          <Settings className="size-4" aria-hidden /> Account and settings
+        </Link>
+        <form action={logoutAction}>
+          <button type="submit" className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-sm hover:bg-accent">
+            <LogOut className="size-4" aria-hidden /> Log out
+          </button>
+        </form>
+      </div>
+    </div>
+  </details>
+)
+
+export const SiteHeader = ({ user }: { user: User | null }) => (
+  <header className="sticky top-0 z-40 border-b bg-card/90 backdrop-blur supports-[backdrop-filter]:bg-card/75">
+    <div className="mx-auto flex h-14 max-w-5xl items-center gap-4 px-4">
+      <Link href="/" className="mr-auto" aria-label="Let's Talk English home">
+        <Logo />
+      </Link>
+      {user ? (
+        <>
+          <NavLinks user={user} />
+          <UserMenu user={user} />
+        </>
+      ) : (
+        <nav className="flex items-center gap-2">
+          <Button asChild variant="ghost" size="sm">
+            <Link href="/login">
+              <UserRound aria-hidden className="sm:hidden" />
+              <span>Log in</span>
+            </Link>
+          </Button>
+          <Button asChild size="sm">
+            <Link href="/register">Sign up free</Link>
+          </Button>
+        </nav>
+      )}
+    </div>
+  </header>
+)

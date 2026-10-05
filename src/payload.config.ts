@@ -5,11 +5,15 @@ import { buildConfig } from 'payload'
 import sharp from 'sharp'
 import { fileURLToPath } from 'url'
 
+import { AiFeedback } from './collections/AiFeedback'
+import { Assignments } from './collections/Assignments'
 import { Categories } from './collections/Categories'
 import { Media } from './collections/Media'
 import { PracticeLogs } from './collections/PracticeLogs'
 import { QuestionSets } from './collections/QuestionSets'
+import { StudentNotes } from './collections/StudentNotes'
 import { Users } from './collections/Users'
+import { appEndpoints } from './endpoints/app'
 import { SITE_NAME } from './lib/constants'
 import { getServerURL } from './lib/server-url'
 import { migrations } from './migrations'
@@ -18,6 +22,12 @@ const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 const serverURL = getServerURL()
+// Extra origins allowed to call the API from a browser, e.g. the mobile app's web preview
+// (CORS_ORIGINS=http://localhost:8081). The native app sends no Origin and needs none.
+const extraOrigins = (process.env.CORS_ORIGINS ?? '')
+  .split(',')
+  .map((o) => o.trim().replace(/\/$/, ''))
+  .filter(Boolean)
 
 // Without SMTP settings Payload prints emails to the server console, which is
 // what we want in development and tests.
@@ -39,7 +49,7 @@ const email = process.env.SMTP_HOST
 
 export default buildConfig({
   serverURL,
-  cors: [serverURL],
+  cors: [serverURL, ...extraOrigins],
   csrf: [serverURL],
   admin: {
     user: Users.slug,
@@ -48,12 +58,15 @@ export default buildConfig({
     },
     components: {
       afterNavLinks: ['@/components/admin/AdminNavLinks#AdminNavLinks'],
+      beforeDashboard: ['@/components/admin/Overview#Overview'],
     },
     importMap: {
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [QuestionSets, Categories, Media, Users, PracticeLogs],
+  collections: [QuestionSets, Categories, Media, Users, PracticeLogs, Assignments, StudentNotes, AiFeedback],
+  // The mobile app's API: /api/app/* (src/endpoints/app.ts).
+  endpoints: appEndpoints,
   graphQL: {
     disable: true,
   },

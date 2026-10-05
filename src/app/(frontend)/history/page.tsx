@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 
 import { FilterChips } from '@/components/filter-chips'
 import { HistoryList } from '@/components/history-list'
+import { HistoryTabs } from '@/components/history-tabs'
 import { PageHeader } from '@/components/page-header'
 import { Pagination } from '@/components/pagination'
 import { ResetCycleForm } from '@/components/reset-cycle-form'
@@ -49,6 +50,7 @@ export default async function HistoryPage({
       />
 
       <div>
+        <HistoryTabs active="practice" />
         <FilterChips
           label="Filter by category"
           chips={[

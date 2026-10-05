@@ -41,6 +41,17 @@ Run the student journey on each:
 | S14 | Log out, then "Forgot your password?" and follow the link | Can set a new password and log in with it | |
 | S15 | Type /educator, then /admin, in the address bar | /educator sends you back to the practice page; /admin shows a "not allowed" page | |
 
+### Version 4 (student)
+
+| # | Step | Expected | Pass |
+|---|---|---|---|
+| S16 | Open Home after practising | Weekly goal ring, streak, calendar and "progress by part" show today's practice | |
+| S17 | Open a Part 2 set, start the timer | 1-minute prep countdown, then 2-minute speaking timer; a beep at each change | |
+| S18 | Record an answer and play it back | The browser asks for the microphone once; playback works; nothing is uploaded | |
+| S19 | Speak or type an answer, tap "Get AI feedback" | A band estimate, comments, a stronger answer and phrases (needs an API key) | |
+| S20 | Rate confidence 1–5 and mark as practised | History shows the confidence rating | |
+| S21 | Me → Appearance → Dark | The whole app switches to dark and stays dark after reload | |
+
 ## Educator
 
 | # | Step | Expected | Pass |
@@ -55,6 +66,33 @@ Run the student journey on each:
 | E8 | As the student, open that category | The covered set is not offered | |
 | E9 | Open a set from "Not done yet" and use it in a live session, then "Mark as covered" | Recorded for that student | |
 | E10 | A second educator logs in | Sees only their own students | |
+
+### Version 4 (educator)
+
+| # | Step | Expected | Pass |
+|---|---|---|---|
+| E11 | Students list: search and sort by "needs attention" | Inactive and slipping students first, with status labels and 8-week lines | |
+| E12 | Student → Not done yet → tick 2 sets, set a due date and note → Assign | "2 sets assigned"; the student sees them on Home | |
+| E13 | Student practises an assigned set | It shows as Done under Assignments | |
+| E14 | Student → Notes → add a note | Saved; the student cannot see it | |
+| E15 | Export CSV on the Students page | A spreadsheet of your students and their progress | |
+
+## Phone app (Android and iOS)
+
+Run on one Android phone and one iPhone, with the app opened in Expo Go (see `mobile/README.md`) or installed from a
+test build.
+
+| # | Step | Expected | Pass |
+|---|---|---|---|
+| M1 | Log in as a student | Home with weekly goal, streak and calendar matching the website | |
+| M2 | Practice → a part → a set → record an answer, play it back | The phone asks for the microphone once; playback works | |
+| M3 | Part 2 set → Start preparing | 1-minute countdown, vibration when it's time to speak, 2-minute timer; the screen stays on | |
+| M4 | Dictate an answer with the keyboard microphone → Get AI feedback | Feedback card with a band estimate (needs an API key) | |
+| M5 | Rate confidence and mark as practised | "Saved!"; the set is in History on the app and on the website | |
+| M6 | Me → Appearance → Dark | The app switches to dark | |
+| M7 | Log in as an educator → a student → Not done yet → tick a set → Assign | The student sees it on Home (app and website) | |
+| M8 | Educator → Me → Share invite code | The phone's share sheet opens with the code | |
+| M9 | Log in with the admin account | Told to use the website | |
 
 ## Admin
 

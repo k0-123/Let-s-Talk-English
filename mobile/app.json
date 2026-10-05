@@ -1,0 +1,60 @@
+{
+  "expo": {
+    "name": "Let's Talk English",
+    "slug": "lets-talk-english",
+    "scheme": "letstalkenglish",
+    "version": "4.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.letstalkenglish.app",
+      "infoPlist": {
+        "NSMicrophoneUsageDescription": "Let's Talk English records your speaking practice so you can listen back. Recordings stay on your phone."
+      }
+    },
+    "android": {
+      "package": "com.letstalkenglish.app",
+      "adaptiveIcon": {
+        "backgroundColor": "#4338CA",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ],
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "output": "single"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-secure-store",
+      [
+        "expo-audio",
+        {
+          "microphonePermission": "Let's Talk English records your speaking practice so you can listen back. Recordings stay on your phone."
+        }
+      ],
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash-icon.png",
+          "imageWidth": 96,
+          "resizeMode": "contain",
+          "backgroundColor": "#f6f7fb",
+          "dark": {
+            "image": "./assets/splash-icon.png",
+            "backgroundColor": "#0b0f1e"
+          }
+        }
+      ],
+      "expo-font",
+      "expo-asset"
+    ]
+  }
+}

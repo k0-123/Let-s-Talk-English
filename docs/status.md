@@ -1,9 +1,12 @@
-# V1 status
+# Status
 
-Where V1 stands against the [execution plan](execution-plan.md). Last updated: 5 Oct 2026.
+Where the project stands against the [execution plan](execution-plan.md). Current version: **4.0.0**
+([CHANGELOG.md](../CHANGELOG.md)). Last updated: 6 Oct 2026.
 
-**Summary:** every feature in the V1 Definition is built and covered by automated tests. It runs locally. What's left
-needs the client (content, decisions, UAT) or a hosting decision (domain, SSL, email domain, backups, monitoring).
+**Summary:** every feature in the V1 Definition is built and covered by automated tests, plus the version 4 upgrades
+(dashboard, speaking tools, AI feedback, assignments, notes, exports, dark mode) and an Android/iOS app for students
+and educators ([mobile/README.md](../mobile/README.md)). It runs locally. What's left needs the client (content,
+decisions, UAT, store accounts) or a hosting decision (domain, SSL, email domain, backups, monitoring).
 
 Legend: ✅ done · ⏳ waiting on the client · 🏠 waiting on the hosting decision
 
@@ -43,6 +46,17 @@ Legend: ✅ done · ⏳ waiting on the client · 🏠 waiting on the hosting dec
 | Backups, monitoring and SSL | 🏠 | See "Waiting on hosting" below |
 | Client UAT sign-off | ⏳ | Script in [uat-checklist.md](uat-checklist.md) |
 
+## Mobile app (Android and iOS)
+
+| Item | Status | Notes |
+|---|---|---|
+| Student screens: home, practice, set with speaking tools and AI feedback, history, account | ✅ | Same rules as the website, decided by the server |
+| Educator screens: students, student page (assign, cover, notes, AI feedback), assignments, invite code | ✅ | |
+| Automated tests | ✅ | App API integration tests, Jest tests in `mobile/`, end-to-end tests of the app's web build |
+| Try on a real phone | ✅ | With Expo Go on the same Wi-Fi as the computer running the website |
+| Installable builds and store listings | 🏠 ⏳ | Need the website online at https://, an Expo account, and the client's Google Play and Apple developer accounts |
+| In-app live transcript while speaking | — | Needs a custom build instead of Expo Go; students use keyboard dictation for now |
+
 ## Milestones by phase
 
 | Phase | Done | Open |
@@ -72,7 +86,10 @@ Hosting is not decided, so V1 currently runs locally only. Once it is decided:
 7. **Monitoring:** Sentry (or similar) for errors and an uptime monitor.
 8. **First admin:** open `/admin` on the new site and create the client's account (the first account is always admin),
    then create the categories.
-9. **Legal pages:** privacy policy and terms (text from the client).
+9. **Legal pages:** `/privacy` and `/terms` have draft text; the client must review it and fill in `[CONTACT_EMAIL]`.
+10. **AI feedback:** an Anthropic API key (`ANTHROPIC_API_KEY`) and a monthly spending limit on the Anthropic account.
+11. **Mobile app:** build it with the website's https:// address (`EXPO_PUBLIC_API_URL`), then publish with EAS
+    (steps in [mobile/README.md](../mobile/README.md)) under the client's store accounts.
 
 ## Decisions made during the build
 

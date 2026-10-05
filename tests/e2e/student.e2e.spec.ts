@@ -17,19 +17,19 @@ test.describe('Student journey', () => {
     await expect(page).toHaveURL(/\/register\/check-email/)
 
     // Cannot log in before confirming the email
-    await login(page, email)
+    await login(page, email, { expectFailure: true })
     await expect(page.getByText('Please confirm your email address first')).toBeVisible()
 
     // Confirm via the emailed link, then log in
     await page.goto(`/verify-email?token=${await getVerificationToken(email)}`)
     await expect(page).toHaveURL(/\/login\?verified=1/)
     await login(page, email)
-    await expect(page).toHaveURL(/\/practice$/)
+    await expect(page).toHaveURL(/\/dashboard$/)
 
     // Join the educator with their invite code (case and spaces do not matter)
     const payload = await getPayload()
     const educator = (await payload.find({ collection: 'users', where: { email: { equals: accounts.educator.email } } })).docs[0]
-    await page.getByRole('link', { name: 'Join my educator' }).click()
+    await page.getByRole('link', { name: 'Join your educator with their invite code' }).click()
     await page.getByLabel('Invite code').fill(` ${educator.inviteCode!.toLowerCase()} `)
     await page.getByRole('button', { name: 'Join' }).click()
     await expect(page.getByText(`You have joined ${accounts.educator.name}`)).toBeVisible()
@@ -47,7 +47,7 @@ test.describe('Student journey', () => {
 
     // Questions first, answers revealed on tap
     await expect(page.getByRole('heading', { level: 1 })).toHaveText(topic)
-    const firstAnswer = page.locator('details').first()
+    const firstAnswer = page.getByTestId('sample-answer').first()
     await expect(firstAnswer).not.toHaveAttribute('open', '')
     await firstAnswer.locator('summary').click()
     await expect(firstAnswer).toHaveAttribute('open', '')
@@ -86,7 +86,8 @@ test.describe('Student journey', () => {
     }
 
     await login(page, email)
-    await expect(page).toHaveURL(/\/practice$/)
+    await expect(page).toHaveURL(/\/dashboard$/)
+    await page.goto('/practice')
     await expect(page.getByRole('link', { name: /^Part 2/ })).toContainText('All sets practised')
     await page.getByRole('link', { name: /^Part 2/ }).click()
     await expect(page.getByRole('heading', { name: 'You have practised every set in Part 2' })).toBeVisible()
@@ -100,7 +101,7 @@ test.describe('Student journey', () => {
 
     // History from the first cycle is kept
     await page.goto('/history')
-    await expect(page.getByText('You are on practice cycle 2.')).toBeVisible()
+    await expect(page.getByText(/You are on practice cycle 2\./)).toBeVisible()
     await expect(page.getByText('Cycle 1').first()).toBeVisible()
   })
 })

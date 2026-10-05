@@ -16,7 +16,7 @@ test.describe('Educator journey', () => {
     await expect(page.getByText('Educator accounts are also checked by our team')).toBeVisible()
 
     await page.goto(`/verify-email?token=${await getVerificationToken(email)}`)
-    await login(page, email)
+    await login(page, email, { expectFailure: true })
     await expect(page.getByText('Your educator account is waiting for approval')).toBeVisible()
 
     // The admin approves the educator in the Payload admin panel
@@ -34,18 +34,20 @@ test.describe('Educator journey', () => {
     await login(page, email)
     await expect(page).toHaveURL(/\/educator$/)
     await expect(page.getByTestId('invite-code')).toHaveText(/^[A-Z2-9]{6}$/)
-    await expect(page.getByText('No students yet')).toBeVisible()
+    await expect(page.getByRole('heading', { name: 'No students yet' })).toBeVisible()
   })
 
   test('sees only their own students, their history, and can mark a set as covered', async ({ page }) => {
     await login(page, accounts.educator.email)
     await expect(page).toHaveURL(/\/educator$/)
     const main = page.locator('main')
-    await expect(main.getByRole('link', { name: accounts.student.name }).first()).toBeVisible()
+    const studentLink = main.getByRole('link', { name: accounts.student.name }).filter({ visible: true }).first()
+    await expect(studentLink).toBeVisible()
     await expect(main).not.toContainText(accounts.otherStudent.name)
 
-    await main.getByRole('link', { name: accounts.student.name }).first().click()
+    await studentLink.click()
     await expect(page.getByRole('heading', { level: 1 })).toHaveText(accounts.student.name)
+    await page.getByRole('link', { name: 'History', exact: true }).click()
     await expect(page.getByText('No sets practised yet.')).toBeVisible()
 
     await page.getByRole('link', { name: 'Not done yet' }).click()
@@ -53,11 +55,11 @@ test.describe('Educator journey', () => {
     await page.getByRole('link', { name: 'Part 3', exact: true }).click()
     await expect(page).toHaveURL(/tab=todo&category=part-3/)
     await expect(page.getByText(/6 sets .* has not done in Part 3/)).toBeVisible()
-    const firstRow = page.locator('main ul > li').first()
-    const topic = (await firstRow.locator('a').textContent())!.trim()
+    const firstRow = page.locator('main form ul > li').first()
+    const topic = (await firstRow.locator('a').first().textContent())!.trim()
     await firstRow.getByRole('button', { name: 'Mark as covered' }).click()
     await expect(page.getByText(/5 sets .* has not done in Part 3/)).toBeVisible()
-    await expect(page.locator('main ul')).not.toContainText(topic)
+    await expect(page.locator('main form ul')).not.toContainText(topic)
 
     await page.getByRole('link', { name: 'History', exact: true }).click()
     await expect(page).not.toHaveURL(/tab=todo/)
