@@ -3,8 +3,10 @@ import type { Payload } from 'payload'
 import { isApprovedEducator, isStudent, relationId } from '@/access'
 import type { User } from '@/payload-types'
 
+import { dayKey } from './dates'
 import { generateUniqueInviteCode, normaliseInviteCode } from './invite-code'
 import { PracticeError } from './practice'
+import { getActivityStatus, getWeeklyCounts, type ActivityStatus } from './progress'
 
 /**
  * Educator and student-linking logic. Reads use the caller's access rules
@@ -24,6 +26,9 @@ export type StudentSummary = {
   /** Date of the most recent practice log, if any. */
   lastActive: string | null
   joinedAt: string
+  /** Sets per week for the last 8 weeks, oldest first. */
+  weekly: number[]
+  status: ActivityStatus
 }
 
 const requireEducator = (actor: User): void => {
@@ -33,6 +38,7 @@ const requireEducator = (actor: User): void => {
 export const listStudentSummaries = async (
   payload: Payload,
   educator: User,
+  now = new Date(),
 ): Promise<StudentSummary[]> => {
   requireEducator(educator)
 
@@ -70,18 +76,30 @@ export const listStudentSummaries = async (
         setsAllTime: 0,
         lastActive: null,
         joinedAt: s.createdAt,
+        weekly: [],
+        status: 'new' as ActivityStatus,
       },
     ]),
   )
 
+  const daysByStudent = new Map<string, string[]>()
   for (const log of logs.docs) {
-    const summary = summaries.get(relationId(log.student) ?? '')
+    const id = relationId(log.student) ?? ''
+    const summary = summaries.get(id)
     if (!summary) continue
     summary.setsAllTime += 1
     if (log.cycle === summary.cycle) summary.setsThisCycle += 1
     if (!summary.lastActive || log.practisedAt > summary.lastActive) summary.lastActive = log.practisedAt
+    const days = daysByStudent.get(id) ?? []
+    days.push(dayKey(log.practisedAt))
+    daysByStudent.set(id, days)
   }
 
+  const today = dayKey(now)
+  for (const summary of summaries.values()) {
+    summary.weekly = getWeeklyCounts(daysByStudent.get(summary.id) ?? [], today, 8)
+    summary.status = getActivityStatus(summary.lastActive ? dayKey(summary.lastActive) : null, today)
+  }
   return [...summaries.values()]
 }
 
