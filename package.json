@@ -1,6 +1,6 @@
 {
   "name": "lets-talk-english",
-  "version": "0.1.0",
+  "version": "4.0.0",
   "private": true,
   "description": "IELTS Speaking practice and student-tracking web app",
   "license": "UNLICENSED",
@@ -22,7 +22,9 @@
     "import:sets": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/import-sets.ts",
     "test": "npm run test:int && npm run test:e2e",
     "test:int": "cross-env NODE_OPTIONS=--no-deprecation vitest run --config ./vitest.config.mts",
-    "test:e2e": "cross-env NODE_OPTIONS=\"--no-deprecation --import=tsx/esm\" playwright test --config=playwright.config.ts"
+    "test:e2e": "cross-env NODE_OPTIONS=\"--no-deprecation --import=tsx/esm\" playwright test --config=playwright.config.ts",
+    "build:app-e2e": "cd mobile && cross-env CI=1 EXPO_PUBLIC_API_URL=http://localhost:3100 npx expo export --platform web --output-dir dist-e2e",
+    "test:e2e:app": "npm run build:app-e2e && npm run test:e2e -- --project=mobile-app"
   },
   "engines": {
     "node": ">=20.9.0"

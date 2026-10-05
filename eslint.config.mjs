@@ -32,6 +32,8 @@ const eslintConfig = [
       'playwright-report/',
       'test-results/',
       'next-env.d.ts',
+      // The Expo app has its own ESLint setup (mobile/eslint.config.js).
+      'mobile/',
     ],
   },
 ]

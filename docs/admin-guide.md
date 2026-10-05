@@ -95,6 +95,12 @@ Students can ask Claude for feedback on their answers once an Anthropic API key 
 [ai-feedback.md](ai-feedback.md) for setup and costs). **People → AI feedback** lists every request with its token
 counts, which is how you can check what it costs.
 
+## The phone app
+
+Students and educators can also use the Android/iOS app. It uses the same accounts, so there is nothing to set up
+per user, and everything they do in the app shows up here as usual. Admin accounts can't log in to the app: you
+keep using the website. Installing and publishing the app is described in `mobile/README.md`.
+
 ## Emails
 
 The app sends account confirmation, password reset, "educator waiting for approval" (to you) and "you're approved"

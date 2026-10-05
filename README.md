@@ -10,8 +10,9 @@ one, their educator can see it, and **a practised set is never offered to that s
   dates, keep private notes, mark sets covered in live sessions, and export progress as CSV.
 - **The admin** manages question sets and categories, bulk-imports sets from CSV/JSON, approves educators, and sees
   usage at a glance on the admin dashboard.
-- Light and dark themes, built for phones first. A native **Android/iOS app** is planned in `mobile/`
-  ([docs/mobile-app-plan.md](docs/mobile-app-plan.md)).
+- Light and dark themes, built for phones first.
+- A native **Android/iOS app** for students and educators in `mobile/` (Expo), using this website as its server.
+  Try it on your phone with Expo Go: see [mobile/README.md](mobile/README.md).
 
 Built with Next.js 16, Payload 3 (auth, access rules and the admin panel), PostgreSQL and Tailwind CSS. See
 [docs/architecture.md](docs/architecture.md).
@@ -83,6 +84,7 @@ first account (it becomes the admin), then add categories and import sets.
 | `npm run lint` / `npm run typecheck` | ESLint / TypeScript |
 | `npm run test:int` | Unit and integration tests (uses the `lte_test` database) |
 | `npm run test:e2e` | Playwright end-to-end tests (uses `lte_e2e` and port 3100) |
+| `npm run test:e2e:app` | Builds the mobile app for the web and runs its end-to-end tests at phone size |
 | `npm run generate:types` | Regenerate `src/payload-types.ts` after changing a collection |
 | `npm run migrate:create -- <name>` | Create a database migration after changing a collection |
 
@@ -93,9 +95,11 @@ first account (it becomes the admin), then add categories and import sets.
 - **End-to-end tests** (`tests/e2e`) drive a real browser through the student, educator and admin journeys, the
   speaking tools (with a fake microphone), AI feedback, assignments, notes, CSV export, dark mode and the access
   rules, at desktop and phone sizes. They build their database from the committed migrations.
+- **The mobile app** has its own type-check, lint and Jest tests (`cd mobile && npm test`), and end-to-end tests
+  that drive its web build against the server (`npm run test:e2e:app`).
 - First time only: `npx playwright install chromium`.
-- **CI** (`.github/workflows/ci.yml`) runs lint, type-check, all tests and a production build on every push and pull
-  request.
+- **CI** (`.github/workflows/ci.yml`) runs lint, type-check, all tests (website and app) and a production build on
+  pushes to `main` and on pull requests.
 
 ## Project structure
 
@@ -108,6 +112,7 @@ src/migrations/      database migrations
 scripts/             seed and import scripts
 data/                20 sample question sets (CSV and JSON)
 tests/               unit, integration and end-to-end tests
+mobile/              the Android/iOS app (Expo), with its own package.json
 docs/                plan, scope, guides and design notes
 ```
 
@@ -119,7 +124,8 @@ docs/                plan, scope, guides and design notes
 | [docs/status.md](docs/status.md) | What's done, what's waiting on the client or on hosting |
 | [CHANGELOG.md](CHANGELOG.md) | What changed in each version |
 | [docs/ai-feedback.md](docs/ai-feedback.md) | How AI feedback works, what it costs, how to switch it on |
-| [docs/mobile-app-plan.md](docs/mobile-app-plan.md) | The plan for the Android/iOS app |
+| [mobile/README.md](mobile/README.md) | Running the Android/iOS app on a phone, building and publishing it |
+| [docs/mobile-app-plan.md](docs/mobile-app-plan.md) | How the app is designed and how it talks to the server |
 | [docs/scope.md](docs/scope.md) | One-page scope for the client to confirm and sign |
 | [docs/admin-guide.md](docs/admin-guide.md) | How the client runs the app day to day |
 | [docs/import-format.md](docs/import-format.md) | The CSV/JSON format for question sets |

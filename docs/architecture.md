@@ -67,6 +67,19 @@ Users also have `weeklyGoal`, `theme` and `onboardingDismissed`; practice logs h
 | Charts | `src/components/charts/` (hand-built SVG; one sequential hue, text alternatives) |
 | Theme | `src/lib/theme.ts`: a cookie read on the server plus a tiny pre-paint script, so there is no flash |
 
+## Mobile app
+
+The Android/iOS app for students and educators lives in `mobile/` (Expo, React Native, Expo Router). It has its
+own `package.json` and is never part of the website build. Details: [mobile-app-plan.md](mobile-app-plan.md) and
+[mobile/README.md](../mobile/README.md).
+
+| Part | Where |
+|---|---|
+| Sign-in | Payload's REST API (`/api/users/login`, sign-up, forgot password). The token is kept in the phone's secure storage and sent as `Authorization: JWT …`; no cookie is involved, so the CSRF check doesn't apply |
+| Everything else | The app API, `src/endpoints/app.ts`: Payload custom endpoints under `/api/app/*`. Each one checks the role, then calls the same `src/lib/` functions as the website with the user's own access (`overrideAccess: false`) |
+| Cross-origin calls | Only the app's web preview needs them; allow its address with `CORS_ORIGINS` |
+| Tests | `tests/int/app-api.int.spec.ts` (every endpoint), `mobile/__tests__/` (Jest), `tests/e2e/mobile-app.e2e.spec.ts` (the app's web build against the server) |
+
 ## Where access is enforced
 
 Access rules live **only** in the collection configs (`src/collections/*.ts`), using the helpers in
@@ -105,6 +118,7 @@ move it to Postgres or Redis.
 src/
   access/              role helpers shared by collections, hooks and pages
   collections/         Payload collections: fields, access rules, hooks
+  endpoints/app.ts     the mobile app's API (/api/app/*)
   email/templates.ts   all email HTML
   lib/
     practice.ts        next sets, record practice, history, cycles
@@ -115,11 +129,12 @@ src/
     (frontend)/        the student, educator and import screens, and their server actions
     (payload)/         Payload admin panel and REST API (generated, don't edit)
   migrations/          database migrations (generated with npm run migrate:create)
-scripts/               seed.ts, import-sets.ts
+scripts/               seed.ts, import-sets.ts, serve-static.mjs (serves the app's web build in tests)
 tests/
-  unit/                importer parsing
-  int/                 access rules, practice rules, importer against Postgres
-  e2e/                 Playwright journeys
+  unit/                importer parsing, progress maths
+  int/                 access rules, practice rules, importer, app API against Postgres
+  e2e/                 Playwright journeys (website, and the app's web build)
+mobile/                the Android/iOS app (Expo); see mobile/README.md
 ```
 
 ## Database schema changes

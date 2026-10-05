@@ -71,8 +71,9 @@ more than one educator per student, and notifications beyond the emails listed a
 
 **Added after V1 (version 4):** AI feedback on answers (text only; the client pays Anthropic per request, see
 [ai-feedback.md](ai-feedback.md)), in-browser recording that stays on the device, progress dashboards,
-assignments, private educator notes and CSV exports. A native Android/iOS app is planned separately
-([mobile-app-plan.md](mobile-app-plan.md)).
+assignments, private educator notes and CSV exports, and a native Android/iOS app for students and educators
+([mobile-app-plan.md](mobile-app-plan.md)). Publishing the app needs the client's own Google Play and Apple
+developer accounts.
 
 Any new request goes through a written change request with its own price and timeline.
 

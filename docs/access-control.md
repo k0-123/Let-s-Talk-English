@@ -57,6 +57,22 @@ Notes:
 | Educator not approved | Refused: "waiting for approval" |
 | 5 wrong passwords | Account locked for 10 minutes (admin can unlock) |
 | Cookie sent by a non-browser client or another site | Ignored (CSRF protection) |
+| Admin account in the mobile app | Refused: told to use the website |
+
+## The mobile app's API (`/api/app/*`)
+
+The app sends its login token in the `Authorization` header. Each endpoint in `src/endpoints/app.ts` checks, in order:
+
+| Check | Result |
+|---|---|
+| Not logged in | 401 |
+| Role not allowed for the endpoint (students: student endpoints; educators: educator endpoints; admins: none) | 403 |
+| Educator not approved | 403 |
+| A student id that isn't one of the educator's own students | 404, the same as a student that doesn't exist |
+
+After these checks the endpoint calls the same `src/lib/` functions as the website with the user's own access, so
+every collection rule above still applies. Cross-origin browser calls are refused unless the origin is listed in
+`CORS_ORIGINS` (only the app's web preview needs this).
 
 ## Where each rule is tested
 
@@ -77,3 +93,5 @@ Notes:
 | Assignments, notes and AI feedback: who can create, read, change and delete | `tests/int/access-v4.int.spec.ts` |
 | Student can't open educator or admin pages | `access.e2e.spec.ts` |
 | CSRF: cookie from a non-browser client is ignored | `access.e2e.spec.ts` |
+| App API: logged out → 401, wrong role or pending educator → 403, another educator's student → 404 | `tests/int/app-api.int.spec.ts` |
+| App: an educator sees only their own students; an admin can't sign in | `tests/e2e/mobile-app.e2e.spec.ts` |

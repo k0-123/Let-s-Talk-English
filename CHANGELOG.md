@@ -33,9 +33,21 @@ A redesign and a big step up for students, educators and the admin.
 - New design system with dark mode, a bottom tab bar on phones, toasts, loading skeletons and error pages.
 - New landing page, privacy and terms drafts.
 
+### Mobile app (Android and iOS)
+- A native app for students and educators in `mobile/` (Expo), using the website as its server: the same
+  accounts, data and rules.
+- Students: home dashboard, practice with the Part 2 timer (vibration, screen kept on), recording and playback,
+  typed or dictated answers with AI feedback, confidence rating, history, joining an educator, weekly goal, theme
+  and new cycles.
+- Educators: class overview, student pages (assign with due dates, mark as covered, private notes, AI feedback),
+  assignments, and the invite code with Share and Copy.
+- Light and dark themes, branded icon and launch screen. Try it on a phone with Expo Go; build installable apps
+  with EAS (see `mobile/README.md`).
+
 ### Under the hood
 - New collections: assignments, student notes, AI feedback (with access rules and tests); migration `v4`.
-- 33 new integration tests and 10 new end-to-end tests.
+- App API (`/api/app/*`) for the mobile app, calling the same code and access rules as the website.
+- 49 new integration and unit tests, 13 new end-to-end tests (3 of them drive the app) and 28 Jest tests for the app.
 
 ## 1.0.0
 

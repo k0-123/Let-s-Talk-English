@@ -77,6 +77,23 @@ Run the student journey on each:
 | E14 | Student → Notes → add a note | Saved; the student cannot see it | |
 | E15 | Export CSV on the Students page | A spreadsheet of your students and their progress | |
 
+## Phone app (Android and iOS)
+
+Run on one Android phone and one iPhone, with the app opened in Expo Go (see `mobile/README.md`) or installed from a
+test build.
+
+| # | Step | Expected | Pass |
+|---|---|---|---|
+| M1 | Log in as a student | Home with weekly goal, streak and calendar matching the website | |
+| M2 | Practice → a part → a set → record an answer, play it back | The phone asks for the microphone once; playback works | |
+| M3 | Part 2 set → Start preparing | 1-minute countdown, vibration when it's time to speak, 2-minute timer; the screen stays on | |
+| M4 | Dictate an answer with the keyboard microphone → Get AI feedback | Feedback card with a band estimate (needs an API key) | |
+| M5 | Rate confidence and mark as practised | "Saved!"; the set is in History on the app and on the website | |
+| M6 | Me → Appearance → Dark | The app switches to dark | |
+| M7 | Log in as an educator → a student → Not done yet → tick a set → Assign | The student sees it on Home (app and website) | |
+| M8 | Educator → Me → Share invite code | The phone's share sheet opens with the code | |
+| M9 | Log in with the admin account | Told to use the website | |
+
 ## Admin
 
 | # | Step | Expected | Pass |
