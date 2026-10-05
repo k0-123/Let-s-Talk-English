@@ -2,6 +2,10 @@ import { APIError, ValidationError, type CollectionConfig, type Where } from 'pa
 
 import { adminOnly, adminOnlyField, isAdmin, isApprovedEducator, isEducator, relationId } from '@/access'
 import {
+  educatorApprovedHTML,
+  educatorApprovedSubject,
+  newEducatorHTML,
+  newEducatorSubject,
   resetPasswordHTML,
   resetPasswordSubject,
   verifyEmailHTML,
@@ -90,6 +94,32 @@ export const Users: CollectionConfig = {
           }
         }
         return data
+      },
+    ],
+    afterChange: [
+      ({ doc, previousDoc, operation, req }) => {
+        if (doc.role !== 'educator') return
+        const send = (to: string, subject: string, html: string) =>
+          req.payload.sendEmail({ to, subject, html }).catch((error: unknown) =>
+            req.payload.logger.error({ err: error, msg: `Could not send email to ${to}` }),
+          )
+
+        if (operation === 'create' && !doc.approved) {
+          // Tell the admin(s) someone is waiting. Not awaited (and outside the request's
+          // transaction): email must never block or fail sign-up.
+          void req.payload
+            .find({ collection: 'users', where: { role: { equals: 'admin' } }, depth: 0, limit: 10 })
+            .then(({ docs }) =>
+              Promise.all(
+                docs.map((admin) =>
+                  send(admin.email, newEducatorSubject(), newEducatorHTML({ name: doc.name, email: doc.email })),
+                ),
+              ),
+            )
+        }
+        if (operation === 'update' && doc.approved && !previousDoc?.approved) {
+          void send(doc.email, educatorApprovedSubject(), educatorApprovedHTML({ name: doc.name }))
+        }
       },
     ],
     beforeLogin: [

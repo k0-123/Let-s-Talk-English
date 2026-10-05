@@ -1,0 +1,686 @@
+[
+  {
+    "code": "P1-HOME-01",
+    "category": "Part 1",
+    "topic": "Hometown",
+    "questions": [
+      {
+        "question": "Where is your hometown?",
+        "answer": "I'm from a mid-sized city in the south of the country. It sits on a river, so it's quite green and pleasant."
+      },
+      {
+        "question": "What do you like most about your hometown?",
+        "answer": "Probably the food. There's a busy night market where you can try local dishes for very little money."
+      },
+      {
+        "question": "Has your hometown changed much in recent years?",
+        "answer": "Yes, quite a lot. Several new shopping centres have opened and the roads are much busier than when I was a child."
+      },
+      {
+        "question": "Would you like to live there in the future?",
+        "answer": "Maybe later in life. For now I'd rather live in a bigger city where there are more job opportunities."
+      }
+    ],
+    "vocabulary": [
+      {
+        "term": "bustling",
+        "meaning": "full of people and activity"
+      },
+      {
+        "term": "on the outskirts",
+        "meaning": "at the edge of a town or city"
+      },
+      {
+        "term": "laid-back",
+        "meaning": "relaxed and calm"
+      }
+    ],
+    "tips": "Give a direct answer first, then add one reason or example. Avoid one-word answers.",
+    "status": "published"
+  },
+  {
+    "code": "P1-WORK-01",
+    "category": "Part 1",
+    "topic": "Work or studies",
+    "questions": [
+      {
+        "question": "Do you work or are you a student?",
+        "answer": "I'm a student. I'm in my second year of a business degree."
+      },
+      {
+        "question": "Why did you choose that subject?",
+        "answer": "I've always been interested in how companies make decisions, and my parents run a small shop, so I grew up around business."
+      },
+      {
+        "question": "What is the most difficult part of your studies?",
+        "answer": "Statistics, to be honest. I find it hard to stay focused when there are lots of numbers."
+      },
+      {
+        "question": "What would you like to do after you graduate?",
+        "answer": "I'm hoping to get a job in marketing, ideally at a company that works internationally."
+      }
+    ],
+    "vocabulary": [
+      {
+        "term": "major in",
+        "meaning": "study as your main subject at university"
+      },
+      {
+        "term": "career prospects",
+        "meaning": "chances of success in a job"
+      },
+      {
+        "term": "hands-on",
+        "meaning": "practical, involving doing things"
+      }
+    ],
+    "tips": "Choose one option (work or study) and stick to it. Use present continuous for current activities.",
+    "status": "published"
+  },
+  {
+    "code": "P1-FREE-01",
+    "category": "Part 1",
+    "topic": "Free time",
+    "questions": [
+      {
+        "question": "What do you usually do in your free time?",
+        "answer": "I mostly play badminton with friends, and in the evenings I like watching cooking videos."
+      },
+      {
+        "question": "Do you prefer spending free time alone or with others?",
+        "answer": "It depends on my mood, but generally with others, because it helps me relax after a busy week."
+      },
+      {
+        "question": "Did you have the same hobbies when you were a child?",
+        "answer": "Not really. As a child I collected stickers, which I find a bit funny now."
+      },
+      {
+        "question": "Is there a new hobby you would like to try?",
+        "answer": "I'd love to try rock climbing. A friend of mine goes every weekend and says it's great exercise."
+      }
+    ],
+    "vocabulary": [
+      {
+        "term": "unwind",
+        "meaning": "relax after work or effort"
+      },
+      {
+        "term": "take up",
+        "meaning": "start a new hobby or activity"
+      },
+      {
+        "term": "pastime",
+        "meaning": "an activity done for enjoyment"
+      }
+    ],
+    "tips": "Use a mix of tenses: present simple for habits, past simple for childhood, and 'would like to' for the future.",
+    "status": "published"
+  },
+  {
+    "code": "P1-WEATH-01",
+    "category": "Part 1",
+    "topic": "Weather",
+    "questions": [
+      {
+        "question": "What's the weather like where you live?",
+        "answer": "It's hot and humid for most of the year, with a rainy season from June to September."
+      },
+      {
+        "question": "What is your favourite kind of weather?",
+        "answer": "I love cool, sunny days, which we don't get very often, so I really appreciate them."
+      },
+      {
+        "question": "Does the weather affect your mood?",
+        "answer": "Definitely. When it rains for several days in a row I feel a bit lazy and less motivated."
+      },
+      {
+        "question": "Do you check the weather forecast?",
+        "answer": "Yes, every morning, mainly to decide whether I need to take an umbrella."
+      }
+    ],
+    "vocabulary": [
+      {
+        "term": "humid",
+        "meaning": "warm and wet in the air"
+      },
+      {
+        "term": "pouring with rain",
+        "meaning": "raining heavily"
+      },
+      {
+        "term": "a heatwave",
+        "meaning": "a period of very hot weather"
+      }
+    ],
+    "tips": "Weather questions are a chance to show topic vocabulary. Try to use at least two precise weather words.",
+    "status": "published"
+  },
+  {
+    "code": "P1-MUSIC-01",
+    "category": "Part 1",
+    "topic": "Music",
+    "questions": [
+      {
+        "question": "What kind of music do you like?",
+        "answer": "Mostly pop, but recently I've been listening to a lot of jazz while I study."
+      },
+      {
+        "question": "When do you usually listen to music?",
+        "answer": "On my way to university and while I'm doing housework."
+      },
+      {
+        "question": "Have you ever learned to play a musical instrument?",
+        "answer": "I took piano lessons for about two years when I was younger, but I gave up because I didn't practise enough."
+      },
+      {
+        "question": "Do you think music is important in people's lives?",
+        "answer": "Yes, I think it helps people express feelings that are hard to put into words."
+      }
+    ],
+    "vocabulary": [
+      {
+        "term": "catchy",
+        "meaning": "easy to remember and pleasant to hear"
+      },
+      {
+        "term": "a playlist",
+        "meaning": "a list of songs chosen to play"
+      },
+      {
+        "term": "give up",
+        "meaning": "stop doing something"
+      }
+    ],
+    "tips": "If you don't know much about a topic, say so naturally and talk about what you do know.",
+    "status": "published"
+  },
+  {
+    "code": "P1-FOOD-01",
+    "category": "Part 1",
+    "topic": "Food and cooking",
+    "questions": [
+      {
+        "question": "What is your favourite food?",
+        "answer": "I'd say noodle soup. My grandmother makes a version with beef and fresh herbs that I love."
+      },
+      {
+        "question": "Do you enjoy cooking?",
+        "answer": "I do, although I only cook simple dishes. I'm trying to learn a few more recipes."
+      },
+      {
+        "question": "Do you prefer eating at home or eating out?",
+        "answer": "At home on weekdays because it's cheaper and healthier, but I like eating out at weekends."
+      },
+      {
+        "question": "Has your diet changed since you were a child?",
+        "answer": "Yes, I eat much less sugar now and more vegetables."
+      }
+    ],
+    "vocabulary": [
+      {
+        "term": "a staple",
+        "meaning": "a basic food eaten regularly"
+      },
+      {
+        "term": "home-cooked",
+        "meaning": "made at home rather than bought"
+      },
+      {
+        "term": "a sweet tooth",
+        "meaning": "a liking for sweet food"
+      }
+    ],
+    "tips": "Describing food is easier with adjectives of taste and texture: spicy, savoury, crunchy, rich.",
+    "status": "published"
+  },
+  {
+    "code": "P1-READ-01",
+    "category": "Part 1",
+    "topic": "Reading",
+    "questions": [
+      {
+        "question": "Do you like reading?",
+        "answer": "Yes, although I don't read as much as I used to because of my studies."
+      },
+      {
+        "question": "What kind of books do you read?",
+        "answer": "Mainly crime novels. I enjoy trying to guess who did it before the end."
+      },
+      {
+        "question": "Do you prefer paper books or e-books?",
+        "answer": "Paper books. I like the feel of them, and reading on a screen makes my eyes tired."
+      },
+      {
+        "question": "Did you read a lot as a child?",
+        "answer": "Yes, my parents read to me every night, and I think that's why I still enjoy it."
+      }
+    ],
+    "vocabulary": [
+      {
+        "term": "a page-turner",
+        "meaning": "a very exciting book"
+      },
+      {
+        "term": "a bookworm",
+        "meaning": "a person who reads a lot"
+      },
+      {
+        "term": "browse",
+        "meaning": "look through casually"
+      }
+    ],
+    "tips": "Compare past and present when it fits: 'I used to…, but now I…'",
+    "status": "published"
+  },
+  {
+    "code": "P1-TECH-01",
+    "category": "Part 1",
+    "topic": "Mobile phones",
+    "questions": [
+      {
+        "question": "How often do you use your phone?",
+        "answer": "Far too often, honestly. I check it as soon as I wake up."
+      },
+      {
+        "question": "What do you mainly use your phone for?",
+        "answer": "Messaging friends, listening to music and checking maps when I go somewhere new."
+      },
+      {
+        "question": "Could you live without your phone for a week?",
+        "answer": "It would be difficult, but I think I could manage if I had a laptop for emergencies."
+      },
+      {
+        "question": "Do you think children should have mobile phones?",
+        "answer": "Older children perhaps, for safety, but I think young children spend too much time on screens already."
+      }
+    ],
+    "vocabulary": [
+      {
+        "term": "addicted to",
+        "meaning": "unable to stop using something"
+      },
+      {
+        "term": "screen time",
+        "meaning": "time spent looking at a device"
+      },
+      {
+        "term": "keep in touch",
+        "meaning": "stay in contact"
+      }
+    ],
+    "tips": "Opinion questions need a clear view and a reason. Phrases like 'I'd say…' or 'On the whole…' sound natural.",
+    "status": "published"
+  },
+  {
+    "code": "P2-PERSON-01",
+    "category": "Part 2",
+    "topic": "Describe a person who has inspired you",
+    "questions": [
+      {
+        "question": "Describe a person who has inspired you. You should say: who this person is, how you know them, what they have done, and explain why they inspired you.",
+        "answer": "I'd like to talk about my secondary school English teacher, Ms Lan. I first met her when I was fourteen, and at that time I was quite shy and hated speaking in class. She started an English club after school where we played games and watched films, and slowly I became more confident. What inspired me most was her patience: she never made anyone feel stupid for making mistakes. Because of her, I decided to keep studying English, and that's partly why I'm preparing for IELTS now."
+      }
+    ],
+    "vocabulary": [
+      {
+        "term": "a role model",
+        "meaning": "a person others admire and copy"
+      },
+      {
+        "term": "look up to",
+        "meaning": "admire and respect"
+      },
+      {
+        "term": "bring out the best in",
+        "meaning": "help someone show their good qualities"
+      }
+    ],
+    "tips": "Use the one minute to note a keyword for each bullet point. Aim to speak for the full two minutes; finishing with 'why' gives you the most to say.",
+    "status": "published"
+  },
+  {
+    "code": "P2-JOURNEY-01",
+    "category": "Part 2",
+    "topic": "Describe a memorable journey",
+    "questions": [
+      {
+        "question": "Describe a memorable journey you have made. You should say: where you went, how you travelled, who you went with, and explain why it was memorable.",
+        "answer": "A journey I'll never forget is a train trip I took with my cousins from the capital to the coast two summers ago. It was an overnight train, so we booked a sleeper cabin. We played cards, ate snacks we had bought at the station and talked until very late. Early in the morning the train ran along the sea, and the view at sunrise was amazing. It was memorable not because anything dramatic happened, but because it was the first time I travelled without my parents, and I felt very independent."
+      }
+    ],
+    "vocabulary": [
+      {
+        "term": "set off",
+        "meaning": "start a journey"
+      },
+      {
+        "term": "breathtaking",
+        "meaning": "extremely beautiful"
+      },
+      {
+        "term": "a sleeper train",
+        "meaning": "a train with beds for overnight travel"
+      }
+    ],
+    "tips": "Past tenses carry this card. Add sensory detail (what you saw, heard, felt) to keep talking naturally.",
+    "status": "published"
+  },
+  {
+    "code": "P2-BOOK-01",
+    "category": "Part 2",
+    "topic": "Describe a book you enjoyed reading",
+    "questions": [
+      {
+        "question": "Describe a book you enjoyed reading. You should say: what the book was, what it was about, when you read it, and explain why you enjoyed it.",
+        "answer": "The book I want to describe is a novel about a family who run a small restaurant over three generations. I read it last year during the summer holiday. The story follows the grandmother, the mother and the daughter, and shows how each of them changes the restaurant to fit the times. I enjoyed it because the characters felt very real, and it made me think about my own family and the traditions we keep. It also made me very hungry, because the food descriptions were so detailed."
+      }
+    ],
+    "vocabulary": [
+      {
+        "term": "a plot",
+        "meaning": "the main events of a story"
+      },
+      {
+        "term": "relatable",
+        "meaning": "easy to understand or connect with"
+      },
+      {
+        "term": "couldn't put it down",
+        "meaning": "found it too interesting to stop reading"
+      }
+    ],
+    "tips": "You don't need to remember the title or author exactly. Spend more time on why you enjoyed it than on summarising the plot.",
+    "status": "published"
+  },
+  {
+    "code": "P2-SKILL-01",
+    "category": "Part 2",
+    "topic": "Describe a skill you learned",
+    "questions": [
+      {
+        "question": "Describe a useful skill you learned. You should say: what the skill is, when and how you learned it, how difficult it was, and explain why it is useful.",
+        "answer": "One skill that has been really useful is touch typing, which means typing without looking at the keyboard. I learned it about three years ago using a free website, practising for around fifteen minutes a day. At first it was frustrating because I was much slower than before, but after a month I was typing faster than ever. It's useful because I write a lot of assignments, and now I can focus on my ideas instead of searching for keys."
+      }
+    ],
+    "vocabulary": [
+      {
+        "term": "get the hang of",
+        "meaning": "learn how to do something"
+      },
+      {
+        "term": "trial and error",
+        "meaning": "learning by trying and making mistakes"
+      },
+      {
+        "term": "second nature",
+        "meaning": "something you do without thinking"
+      }
+    ],
+    "tips": "Show progress over time: 'At first…, then…, eventually…'. That structure fills two minutes easily.",
+    "status": "published"
+  },
+  {
+    "code": "P2-PLACE-01",
+    "category": "Part 2",
+    "topic": "Describe a place you would like to visit",
+    "questions": [
+      {
+        "question": "Describe a place you would like to visit in the future. You should say: where it is, how you know about it, what you would do there, and explain why you would like to go there.",
+        "answer": "I'd really like to visit Iceland one day. I first saw it in a documentary about volcanoes, and I was amazed by the landscapes. If I went, I'd like to rent a car and drive around the island, visit the waterfalls and, if I'm lucky, see the northern lights. The main reason I want to go is that it looks completely different from where I live; it's cold, quiet and empty, which sounds very peaceful to me."
+      }
+    ],
+    "vocabulary": [
+      {
+        "term": "off the beaten track",
+        "meaning": "away from popular tourist places"
+      },
+      {
+        "term": "a once-in-a-lifetime",
+        "meaning": "something you'll probably only do once"
+      },
+      {
+        "term": "the northern lights",
+        "meaning": "coloured lights in the sky near the Arctic"
+      }
+    ],
+    "tips": "Use conditionals for an imagined visit: 'If I went, I would…'.",
+    "status": "published"
+  },
+  {
+    "code": "P2-EVENT-01",
+    "category": "Part 2",
+    "topic": "Describe a celebration you enjoyed",
+    "questions": [
+      {
+        "question": "Describe a celebration you enjoyed. You should say: what it was, where it took place, who was there, and explain why you enjoyed it.",
+        "answer": "I'd like to talk about my grandfather's eightieth birthday party, which we held last spring at a restaurant near his home. Nearly forty relatives came, including some cousins I hadn't seen for years. We had a long lunch, my uncle gave a funny speech and we all looked at old photos together. I enjoyed it because it was rare to have the whole family in one place, and my grandfather was so happy that he couldn't stop smiling."
+      }
+    ],
+    "vocabulary": [
+      {
+        "term": "a get-together",
+        "meaning": "an informal meeting or party"
+      },
+      {
+        "term": "catch up with",
+        "meaning": "talk to someone you haven't seen recently"
+      },
+      {
+        "term": "a milestone",
+        "meaning": "an important event or stage in life"
+      }
+    ],
+    "tips": "Celebrations are personal; a short anecdote (the speech, a surprise) makes your answer memorable.",
+    "status": "published"
+  },
+  {
+    "code": "P3-EDU-01",
+    "category": "Part 3",
+    "topic": "Education",
+    "questions": [
+      {
+        "question": "Do you think schools should teach practical skills like cooking and managing money?",
+        "answer": "I think so. Academic subjects are important, but many young people leave school without knowing how to budget or cook a basic meal, and those skills affect their daily lives far more."
+      },
+      {
+        "question": "Is it better to study alone or in a group?",
+        "answer": "It depends on the task. Memorising facts is often easier alone, while group study is better for discussing ideas and checking understanding."
+      },
+      {
+        "question": "How might technology change education in the future?",
+        "answer": "I imagine lessons will become more personalised, with software adapting to each student's level. However, I don't think it will replace teachers, because motivation and support still come from people."
+      }
+    ],
+    "vocabulary": [
+      {
+        "term": "rote learning",
+        "meaning": "memorising without understanding"
+      },
+      {
+        "term": "well-rounded",
+        "meaning": "having a wide range of skills"
+      },
+      {
+        "term": "a one-size-fits-all approach",
+        "meaning": "the same method for everyone"
+      }
+    ],
+    "tips": "Part 3 wants ideas and reasons. Give a view, explain it, and consider the other side: 'On the other hand…'.",
+    "status": "published"
+  },
+  {
+    "code": "P3-TECH-01",
+    "category": "Part 3",
+    "topic": "Technology and society",
+    "questions": [
+      {
+        "question": "Has technology made people's lives easier or more stressful?",
+        "answer": "Both, really. Everyday tasks like banking and shopping are much faster, but people are expected to be available all the time, which creates a different kind of stress."
+      },
+      {
+        "question": "Do older people find it hard to keep up with technology?",
+        "answer": "Many do, mainly because technology changes so quickly. Having said that, I've noticed more older people using video calls since they want to stay in touch with family."
+      },
+      {
+        "question": "Should governments limit how much time children spend online?",
+        "answer": "I'm not sure governments should control it directly. I think it's more the responsibility of parents and schools, although governments could regulate how apps target children."
+      }
+    ],
+    "vocabulary": [
+      {
+        "term": "a double-edged sword",
+        "meaning": "something with both good and bad effects"
+      },
+      {
+        "term": "tech-savvy",
+        "meaning": "good at using technology"
+      },
+      {
+        "term": "regulate",
+        "meaning": "control with rules"
+      }
+    ],
+    "tips": "Use hedging language for complex opinions: 'I'd argue…', 'To some extent…', 'It's hard to say, but…'.",
+    "status": "published"
+  },
+  {
+    "code": "P3-ENV-01",
+    "category": "Part 3",
+    "topic": "The environment",
+    "questions": [
+      {
+        "question": "What can individuals do to protect the environment?",
+        "answer": "Small actions add up: using public transport, cutting down on plastic and wasting less food. But individuals can also vote for and support companies with greener policies."
+      },
+      {
+        "question": "Are governments or individuals more responsible for solving environmental problems?",
+        "answer": "I believe governments carry more responsibility, because they can change laws and invest in infrastructure on a scale individuals simply can't."
+      },
+      {
+        "question": "Do you think people will change their lifestyles to help the environment?",
+        "answer": "Some will, especially younger people, but I suspect most will only change if greener options are also cheaper and more convenient."
+      }
+    ],
+    "vocabulary": [
+      {
+        "term": "carbon footprint",
+        "meaning": "the amount of carbon dioxide a person produces"
+      },
+      {
+        "term": "sustainable",
+        "meaning": "able to continue without harming the environment"
+      },
+      {
+        "term": "renewable energy",
+        "meaning": "energy from sources like sun and wind"
+      }
+    ],
+    "tips": "Compare groups (governments vs individuals, young vs old) to extend your answers naturally.",
+    "status": "published"
+  },
+  {
+    "code": "P3-WORK-01",
+    "category": "Part 3",
+    "topic": "Work-life balance",
+    "questions": [
+      {
+        "question": "Why do some people work very long hours?",
+        "answer": "Partly for financial reasons, especially in expensive cities, and partly because of workplace culture, where staying late is seen as a sign of commitment."
+      },
+      {
+        "question": "Is working from home a good idea?",
+        "answer": "For many jobs, yes. It saves commuting time and gives people flexibility. The downside is that it can be isolating, and the line between work and home life becomes blurred."
+      },
+      {
+        "question": "What can companies do to help employees stay healthy?",
+        "answer": "They could offer flexible hours, make sure workloads are realistic and encourage people to take their full holidays."
+      }
+    ],
+    "vocabulary": [
+      {
+        "term": "burnout",
+        "meaning": "exhaustion caused by too much work"
+      },
+      {
+        "term": "flexible working",
+        "meaning": "choosing when or where you work"
+      },
+      {
+        "term": "commute",
+        "meaning": "travel to and from work"
+      }
+    ],
+    "tips": "Give causes and effects. Linking words like 'as a result' and 'this means that' show coherent reasoning.",
+    "status": "published"
+  },
+  {
+    "code": "P3-TOUR-01",
+    "category": "Part 3",
+    "topic": "Tourism",
+    "questions": [
+      {
+        "question": "What are the benefits of tourism for a country?",
+        "answer": "The most obvious is economic: tourism creates jobs and brings in foreign money. It also encourages countries to preserve their history and culture."
+      },
+      {
+        "question": "Can tourism have negative effects on local communities?",
+        "answer": "Yes, it can push up housing prices and crowd popular areas, and sometimes local traditions are turned into shows just for visitors."
+      },
+      {
+        "question": "How do you think travel will change in the future?",
+        "answer": "I expect people will travel more responsibly, perhaps taking fewer but longer trips, and trains may replace short flights in some regions."
+      }
+    ],
+    "vocabulary": [
+      {
+        "term": "overtourism",
+        "meaning": "too many tourists in one place"
+      },
+      {
+        "term": "boost the economy",
+        "meaning": "help the economy grow"
+      },
+      {
+        "term": "authentic",
+        "meaning": "real and genuine"
+      }
+    ],
+    "tips": "Speculate about the future with 'I expect…', 'It's likely that…', 'There may well be…'.",
+    "status": "published"
+  },
+  {
+    "code": "P3-CITY-01",
+    "category": "Part 3",
+    "topic": "City and country life",
+    "questions": [
+      {
+        "question": "Why do many young people move from the countryside to cities?",
+        "answer": "Mainly for education and jobs. Cities offer far more opportunities, and they also seem more exciting to young people."
+      },
+      {
+        "question": "What problems can this cause?",
+        "answer": "Cities can become overcrowded, and villages may be left with mostly older residents, which makes it hard to keep schools and shops open."
+      },
+      {
+        "question": "How could life in rural areas be made more attractive?",
+        "answer": "Better internet would make a big difference, because it would let people work remotely. Improving transport links and healthcare would help too."
+      }
+    ],
+    "vocabulary": [
+      {
+        "term": "urbanisation",
+        "meaning": "people moving from the countryside to cities"
+      },
+      {
+        "term": "rural",
+        "meaning": "relating to the countryside"
+      },
+      {
+        "term": "infrastructure",
+        "meaning": "roads, transport, internet and other basic systems"
+      }
+    ],
+    "tips": "Explain problems and solutions clearly. Problem-solution is a common Part 3 pattern.",
+    "status": "published"
+  }
+]

@@ -11,6 +11,8 @@ const buckets = new Map<string, Bucket>()
 export type RateLimitResult = { ok: boolean; retryAfterSeconds: number }
 
 export const rateLimit = (key: string, max: number, windowMs: number): RateLimitResult => {
+  // End-to-end tests log in and register many times from one IP.
+  if (process.env.RATE_LIMIT_DISABLED === 'true') return { ok: true, retryAfterSeconds: 0 }
   const now = Date.now()
 
   // Opportunistic cleanup so the map cannot grow without bound.

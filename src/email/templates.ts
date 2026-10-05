@@ -57,3 +57,26 @@ export const resetPasswordHTML = ({ token }: { token: string }): string =>
     url: `${getServerURL()}/reset-password?token=${encodeURIComponent(token)}`,
     footer: 'If you did not ask for a password reset, you can ignore this email.',
   })
+
+export const educatorApprovedSubject = (): string => `Your ${SITE_NAME} educator account is approved`
+
+export const educatorApprovedHTML = ({ name }: { name?: string | null }): string =>
+  layout({
+    heading: `You're approved${name ? `, ${name}` : ''}!`,
+    intro:
+      'Your educator account is now active. Log in to find your invite code, share it with your students, and follow their practice.',
+    buttonLabel: 'Log in',
+    url: `${getServerURL()}/login`,
+    footer: 'Questions? Reply to this email.',
+  })
+
+export const newEducatorSubject = (): string => `New educator waiting for approval on ${SITE_NAME}`
+
+export const newEducatorHTML = ({ name, email }: { name: string; email: string }): string =>
+  layout({
+    heading: 'An educator is waiting for approval',
+    intro: `${name} (${email}) has registered as an educator. They cannot log in or see any content until you approve them in the admin panel.`,
+    buttonLabel: 'Review educators',
+    url: `${getServerURL()}/admin/collections/users?where[role][equals]=educator&where[approved][equals]=false`,
+    footer: 'Open the user, tick "Approved educator" and save.',
+  })

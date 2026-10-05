@@ -63,30 +63,39 @@ export const getCategoryBySlug = async (
   return result.docs[0] ?? null
 }
 
-/** Published sets per category, for the category picker. */
-export const countPublishedSetsByCategory = async (
+/** New (unpractised) published sets left per category for a student's current cycle. */
+export const countUnpractisedByCategory = async (
   payload: Payload,
   actor: Actor,
-  categories: Category[],
-): Promise<Record<string, number>> => {
-  const counts: Record<string, number> = {}
+  student: Pick<User, 'id' | 'cycle'>,
+  categories: Pick<Category, 'id'>[],
+): Promise<Record<string, { remaining: number; total: number }>> => {
+  const practised = await getPractisedSetIds(payload, actor, student.id, student.cycle ?? 1)
+  const counts: Record<string, { remaining: number; total: number }> = {}
   for (const category of categories) {
-    const { totalDocs } = await payload.count({
-      collection: 'question-sets',
-      where: { and: [{ category: { equals: category.id } }, { status: { equals: 'published' } }] },
-      ...asQuery(actor),
-    })
-    counts[category.id] = totalDocs
+    const base: Where[] = [{ category: { equals: category.id } }, { status: { equals: 'published' } }]
+    const [total, remaining] = await Promise.all([
+      payload.count({ collection: 'question-sets', where: { and: base }, ...asQuery(actor) }),
+      practised.length
+        ? payload.count({
+            collection: 'question-sets',
+            where: { and: [...base, { id: { not_in: practised } }] },
+            ...asQuery(actor),
+          })
+        : null,
+    ])
+    counts[category.id] = { total: total.totalDocs, remaining: remaining?.totalDocs ?? total.totalDocs }
   }
   return counts
 }
 
-export type SetSummary = Pick<QuestionSet, 'id' | 'topic'> & { questionCount: number }
+export type SetSummary = Pick<QuestionSet, 'id' | 'topic'> & { questionCount: number; categoryId: string | null }
 
-const toSummary = (set: Pick<QuestionSet, 'id' | 'topic' | 'questions'>): SetSummary => ({
+const toSummary = (set: Pick<QuestionSet, 'id' | 'topic' | 'questions' | 'category'>): SetSummary => ({
   id: set.id,
   topic: set.topic,
   questionCount: set.questions?.length ?? 0,
+  categoryId: relationId(set.category),
 })
 
 export type UnpractisedSetsResult = {
@@ -125,7 +134,7 @@ export const findUnpractisedSets = async (
     limit,
     page,
     depth: 0,
-    select: { topic: true, questions: { question: true } },
+    select: { topic: true, category: true, questions: { question: true } },
     ...asQuery(actor),
   })
 
