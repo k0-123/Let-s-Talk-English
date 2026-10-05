@@ -78,10 +78,12 @@ const buildUserMessage = (request: FeedbackRequest): string =>
 
 let client: Anthropic | null = null
 
+const EFFORTS = ['low', 'medium', 'high'] as const
+
 /** Claude reviewer: structured output, refusal fallback, and a stable cached system prompt. */
 export const claudeReviewer: FeedbackReviewer = async (request) => {
   client ??= new Anthropic()
-  const effort = (process.env.AI_EFFORT as 'low' | 'medium' | 'high' | undefined) ?? 'medium'
+  const effort = EFFORTS.find((e) => e === process.env.AI_EFFORT?.trim()) ?? 'medium'
   let message
   try {
     message = await client.beta.messages.parse({
