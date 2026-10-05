@@ -59,12 +59,10 @@ export const QuestionSets: CollectionConfig = {
     ],
     beforeDelete: [
       async ({ id, req }) => {
-        // Deleting a set also deletes its practice records. Unpublishing keeps them.
-        await req.payload.delete({
-          collection: 'practice-logs',
-          where: { questionSet: { equals: id } },
-          req,
-        })
+        // Deleting a set also deletes its practice records, assignments and feedback. Unpublishing keeps them.
+        for (const collection of ['practice-logs', 'assignments', 'ai-feedback'] as const) {
+          await req.payload.delete({ collection, where: { questionSet: { equals: id } }, req })
+        }
       },
     ],
   },

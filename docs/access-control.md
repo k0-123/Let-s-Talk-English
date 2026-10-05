@@ -18,14 +18,25 @@ the rules would allow even if they had a valid session.
 | Media · upload / edit / delete | ✗ | ✗ | ✗ | ✗ | ✓ |
 | **Users** · read | ✗ | Self | Self + own students | Self + own students | All |
 | Users · create | Sign-up as student or educator | — | — | — | ✓ any role |
-| Users · update | ✗ | Self (name, email, password) | Self (same) | Self (same) | ✓ |
+| Users · update | ✗ | Self (name, email, password, weekly goal, theme) | Self (same) | Self (same) | ✓ |
 | Users · role, approved, educator link, cycle, invite code | ✗ | ✗ ¹ | ✗ | ✗ ¹ | ✓ |
 | Users · delete / unlock | ✗ | ✗ | ✗ | ✗ | ✓ |
 | **Practice logs** · read | ✗ | Own | ✗ | Own students' | All |
 | Practice logs · create | ✗ | For self, published sets only | ✗ | For own students, published sets only | ✓ |
 | Practice logs · update / delete | ✗ | ✗ | ✗ | ✗ | ✓ |
+| **Assignments** · read | ✗ | Own | ✗ | Ones they created | All |
+| Assignments · create | ✗ | ✗ | ✗ | For own students, published sets only (one per set per student) | ✓ |
+| Assignments · update (note, due date) / delete | ✗ | ✗ | ✗ | Ones they created | ✓ |
+| **Student notes** · read / update / delete | ✗ | ✗ | ✗ | Ones they wrote | All |
+| Student notes · create | ✗ | ✗ | ✗ | About own students | ✓ |
+| **AI feedback** · read | ✗ | Own | ✗ | Own students' | All |
+| AI feedback · create | ✗ | Via "Get feedback" only ² | ✗ | ✗ | ✓ |
+| AI feedback · update / delete | ✗ | ✗ | ✗ | ✗ | Delete only |
 | **Admin panel** (`/admin`) | ✗ | ✗ | ✗ | ✗ | ✓ |
 | **Bulk import** (`/import`) | ✗ | ✗ | ✗ | ✗ | ✓ |
+
+² Rows are written by the server after checking the student, the set, the answer and the daily limit
+(`getAnswerFeedback` in `src/lib/ai-feedback.ts`); the API refuses direct creation.
 
 ¹ Changed only through specific server-side actions that check the role first: a student joins an educator with a
 valid invite code, or starts a new practice cycle; an educator replaces their own invite code.
@@ -63,5 +74,6 @@ Notes:
 | An educator can't mark sets for another educator's student | `access.int.spec.ts` · `tests/int/practice.int.spec.ts` |
 | One log per student, set and cycle (database) | `access.int.spec.ts` |
 | Invite codes: unknown or unapproved codes rejected; old code stops working | `practice.int.spec.ts` |
+| Assignments, notes and AI feedback: who can create, read, change and delete | `tests/int/access-v4.int.spec.ts` |
 | Student can't open educator or admin pages | `access.e2e.spec.ts` |
 | CSRF: cookie from a non-browser client is ignored | `access.e2e.spec.ts` |

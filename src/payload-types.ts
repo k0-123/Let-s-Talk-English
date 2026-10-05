@@ -72,6 +72,9 @@ export interface Config {
     media: Media;
     users: User;
     'practice-logs': PracticeLog;
+    assignments: Assignment;
+    'student-notes': StudentNote;
+    'ai-feedback': AiFeedback;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -84,6 +87,9 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     'practice-logs': PracticeLogsSelect<false> | PracticeLogsSelect<true>;
+    assignments: AssignmentsSelect<false> | AssignmentsSelect<true>;
+    'student-notes': StudentNotesSelect<false> | StudentNotesSelect<true>;
+    'ai-feedback': AiFeedbackSelect<false> | AiFeedbackSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -224,6 +230,12 @@ export interface User {
    * Starts at 1. Goes up by one each time the student resets their history to start a new preparation cycle.
    */
   cycle?: number | null;
+  weeklyGoal?: number | null;
+  theme?: ('system' | 'light' | 'dark') | null;
+  /**
+   * Hides the "getting started" checklist.
+   */
+  onboardingDismissed?: boolean | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -259,9 +271,69 @@ export interface PracticeLog {
   practisedAt: string;
   markedBy: 'student' | 'educator' | 'admin';
   /**
+   * How confident the student felt (1–5), if they rated it.
+   */
+  confidence?: number | null;
+  /**
+   * Time on the speaking timer, if used.
+   */
+  speakingSeconds?: number | null;
+  /**
    * Filled in automatically from the student's current cycle.
    */
   cycle: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "assignments".
+ */
+export interface Assignment {
+  id: string;
+  student: string | User;
+  questionSet: string | QuestionSet;
+  educator: string | User;
+  note?: string | null;
+  dueDate?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "student-notes".
+ */
+export interface StudentNote {
+  id: string;
+  student: string | User;
+  educator: string | User;
+  body: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ai-feedback".
+ */
+export interface AiFeedback {
+  id: string;
+  student: string | User;
+  questionSet: string | QuestionSet;
+  questionIndex: number;
+  question: string;
+  answerText: string;
+  result:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  model?: string | null;
+  inputTokens?: number | null;
+  outputTokens?: number | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -308,6 +380,18 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'practice-logs';
         value: string | PracticeLog;
+      } | null)
+    | ({
+        relationTo: 'assignments';
+        value: string | Assignment;
+      } | null)
+    | ({
+        relationTo: 'student-notes';
+        value: string | StudentNote;
+      } | null)
+    | ({
+        relationTo: 'ai-feedback';
+        value: string | AiFeedback;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -420,6 +504,9 @@ export interface UsersSelect<T extends boolean = true> {
   inviteCode?: T;
   educator?: T;
   cycle?: T;
+  weeklyGoal?: T;
+  theme?: T;
+  onboardingDismissed?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -449,7 +536,50 @@ export interface PracticeLogsSelect<T extends boolean = true> {
   questionSet?: T;
   practisedAt?: T;
   markedBy?: T;
+  confidence?: T;
+  speakingSeconds?: T;
   cycle?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "assignments_select".
+ */
+export interface AssignmentsSelect<T extends boolean = true> {
+  student?: T;
+  questionSet?: T;
+  educator?: T;
+  note?: T;
+  dueDate?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "student-notes_select".
+ */
+export interface StudentNotesSelect<T extends boolean = true> {
+  student?: T;
+  educator?: T;
+  body?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ai-feedback_select".
+ */
+export interface AiFeedbackSelect<T extends boolean = true> {
+  student?: T;
+  questionSet?: T;
+  questionIndex?: T;
+  question?: T;
+  answerText?: T;
+  result?: T;
+  model?: T;
+  inputTokens?: T;
+  outputTokens?: T;
   updatedAt?: T;
   createdAt?: T;
 }

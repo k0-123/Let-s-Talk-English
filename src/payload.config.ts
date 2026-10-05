@@ -5,10 +5,13 @@ import { buildConfig } from 'payload'
 import sharp from 'sharp'
 import { fileURLToPath } from 'url'
 
+import { AiFeedback } from './collections/AiFeedback'
+import { Assignments } from './collections/Assignments'
 import { Categories } from './collections/Categories'
 import { Media } from './collections/Media'
 import { PracticeLogs } from './collections/PracticeLogs'
 import { QuestionSets } from './collections/QuestionSets'
+import { StudentNotes } from './collections/StudentNotes'
 import { Users } from './collections/Users'
 import { SITE_NAME } from './lib/constants'
 import { getServerURL } from './lib/server-url'
@@ -53,7 +56,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [QuestionSets, Categories, Media, Users, PracticeLogs],
+  collections: [QuestionSets, Categories, Media, Users, PracticeLogs, Assignments, StudentNotes, AiFeedback],
   graphQL: {
     disable: true,
   },

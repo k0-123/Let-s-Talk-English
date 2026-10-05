@@ -144,6 +144,14 @@ export const Users: CollectionConfig = {
           where: { student: { equals: id } },
           req,
         })
+        for (const collection of ['assignments', 'student-notes'] as const) {
+          await req.payload.delete({
+            collection,
+            where: { or: [{ student: { equals: id } }, { educator: { equals: id } }] },
+            req,
+          })
+        }
+        await req.payload.delete({ collection: 'ai-feedback', where: { student: { equals: id } }, req })
         await req.payload.update({
           collection: 'users',
           where: { educator: { equals: id } },
@@ -248,6 +256,35 @@ export const Users: CollectionConfig = {
           'Starts at 1. Goes up by one each time the student resets their history to start a new preparation cycle.',
         condition: (data) => data?.role === 'student',
       },
+    },
+    {
+      name: 'weeklyGoal',
+      type: 'number',
+      defaultValue: 5,
+      min: 1,
+      max: 50,
+      label: 'Weekly goal (sets)',
+      admin: {
+        position: 'sidebar',
+        condition: (data) => data?.role === 'student',
+      },
+    },
+    {
+      name: 'theme',
+      type: 'select',
+      defaultValue: 'system',
+      options: [
+        { label: 'Match device', value: 'system' },
+        { label: 'Light', value: 'light' },
+        { label: 'Dark', value: 'dark' },
+      ],
+      admin: { position: 'sidebar' },
+    },
+    {
+      name: 'onboardingDismissed',
+      type: 'checkbox',
+      defaultValue: false,
+      admin: { position: 'sidebar', description: 'Hides the "getting started" checklist.' },
     },
   ],
 }

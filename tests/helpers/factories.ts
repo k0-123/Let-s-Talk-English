@@ -7,7 +7,7 @@ export const getTestPayload = (): Promise<Payload> => getPayload({ config })
 
 /** Deletes every document, children before parents. */
 export const resetDatabase = async (payload: Payload): Promise<void> => {
-  for (const collection of ['practice-logs', 'question-sets', 'categories', 'media', 'users'] as const) {
+  for (const collection of ['ai-feedback', 'student-notes', 'assignments', 'practice-logs', 'question-sets', 'categories', 'media', 'users'] as const) {
     await payload.db.deleteMany({ collection, where: {} })
   }
 }
