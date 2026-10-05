@@ -17,6 +17,7 @@
     "generate:types": "cross-env NODE_OPTIONS=--no-deprecation payload generate:types",
     "migrate": "cross-env NODE_OPTIONS=--no-deprecation payload migrate",
     "migrate:create": "cross-env NODE_OPTIONS=--no-deprecation payload migrate:create",
+    "db:fresh": "cross-env NODE_OPTIONS=--no-deprecation payload migrate:fresh",
     "seed": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/seed.ts",
     "import:sets": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/import-sets.ts",
     "test": "npm run test:int && npm run test:e2e",

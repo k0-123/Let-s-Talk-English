@@ -66,7 +66,10 @@ export default buildConfig({
       connectionString: process.env.DATABASE_URL || '',
     },
     idType: 'uuid',
-    // Production applies committed migrations on boot; development pushes the schema directly.
+    // Development pushes schema changes straight to the database. Set
+    // PAYLOAD_DB_PUSH=false to use committed migrations only (end-to-end tests do).
+    push: process.env.PAYLOAD_DB_PUSH !== 'false',
+    // Production applies committed migrations on boot.
     prodMigrations: migrations,
   }),
   email,

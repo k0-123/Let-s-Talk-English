@@ -11,8 +11,11 @@ import { getPayloadClient } from './payload'
 
 /** The logged-in user for this request, or null. Cached per request. */
 export const getCurrentUser = cache(async (): Promise<User | null> => {
+  // Read the request headers first: this marks the page as dynamic before
+  // anything touches the database, so `next build` never connects to it.
+  const requestHeaders = await headers()
   const payload = await getPayloadClient()
-  const { user } = await payload.auth({ headers: await headers() })
+  const { user } = await payload.auth({ headers: requestHeaders })
   return (user as User | null) ?? null
 })
 

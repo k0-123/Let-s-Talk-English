@@ -7,6 +7,9 @@ import { SITE_NAME } from '@/lib/constants'
 
 import './globals.css'
 
+// Every page depends on who is logged in, so nothing is prerendered at build time.
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
   title: { default: SITE_NAME, template: `%s · ${SITE_NAME}` },
   description: 'Practise IELTS Speaking question sets and track your progress with your educator.',

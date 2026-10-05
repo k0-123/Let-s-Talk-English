@@ -39,6 +39,9 @@ test.describe('Student journey', () => {
     await page.getByRole('link', { name: /^Part 1/ }).click()
     const sets = page.locator('main ol > li a')
     await expect(sets).toHaveCount(5)
+    // Other tests may add sets, so read the count instead of hard-coding it.
+    const remainingText = await page.getByText(/new sets left in this category/).textContent()
+    const remainingBefore = Number(remainingText!.match(/(\d+) new sets left/)![1])
     const topic = (await sets.first().getByTestId('set-topic').textContent())!.trim()
     await sets.first().click()
 
@@ -57,7 +60,7 @@ test.describe('Student journey', () => {
     // The practised set is never offered again
     await expect(page.locator('main ol')).toBeVisible()
     await expect(page.locator('main ol')).not.toContainText(topic)
-    await expect(page.getByText('7 new sets left in this category')).toBeVisible()
+    await expect(page.getByText(`${remainingBefore - 1} new sets left in this category`)).toBeVisible()
 
     // And it is in the history with today's date
     await page.goto('/history')

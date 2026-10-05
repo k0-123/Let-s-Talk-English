@@ -20,6 +20,8 @@ export const getPayload = (): Promise<Payload> => {
   process.env.DATABASE_URL = E2E_DATABASE_URL
   process.env.PAYLOAD_SECRET ||= 'e2e-secret'
   process.env.SMTP_HOST = ''
+  // Use committed migrations, exactly like production.
+  process.env.PAYLOAD_DB_PUSH = 'false'
   payloadPromise ??= (async () => {
     const [{ getPayload: get }, { default: config }] = await Promise.all([
       import('payload'),

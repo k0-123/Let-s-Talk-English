@@ -13,9 +13,11 @@ export const E2E_DATABASE_URL =
 const serverEnv = {
   DATABASE_URL: E2E_DATABASE_URL,
   PAYLOAD_SECRET: process.env.PAYLOAD_SECRET || 'e2e-secret',
-  NEXT_PUBLIC_SERVER_URL: E2E_BASE_URL,
+  SERVER_URL: E2E_BASE_URL,
   PORT: String(PORT),
   RATE_LIMIT_DISABLED: 'true',
+  // The database is built from migrations in global setup; never push schema changes.
+  PAYLOAD_DB_PUSH: 'false',
   SMTP_HOST: '',
 }
 
@@ -49,8 +51,13 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: production ? `npm run build && npm run start -- -p ${PORT}` : `npx next dev -p ${PORT}`,
-    url: `${E2E_BASE_URL}/login`,
+    // E2E_SKIP_BUILD=1 reuses an existing production build (CI builds in an earlier step).
+    command: production
+      ? `${process.env.E2E_SKIP_BUILD ? '' : 'npm run build && '}npm run start -- -p ${PORT}`
+      : `npx next dev -p ${PORT}`,
+    // A static file: the server is ready without starting Payload, so the
+    // database is first touched by global setup (migrateFresh), not by this check.
+    url: `${E2E_BASE_URL}/question-sets-template.csv`,
     env: serverEnv,
     reuseExistingServer: !process.env.CI,
     timeout: 300_000,

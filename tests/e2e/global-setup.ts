@@ -6,12 +6,13 @@ import { parseImportFile } from '../../src/lib/import/parse'
 import type { User } from '../../src/payload-types'
 import { accounts, getPayload, PASSWORD } from './helpers'
 
-/** Fresh database with the 20 sample sets and one account per role. */
+/**
+ * Fresh database built from the committed migrations (which also proves they
+ * match the collections), with the 20 sample sets and one account per role.
+ */
 export default async function globalSetup() {
   const payload = await getPayload()
-  for (const collection of ['practice-logs', 'question-sets', 'categories', 'media', 'users'] as const) {
-    await payload.db.deleteMany({ collection, where: {} })
-  }
+  await payload.db.migrateFresh({ forceAcceptWarning: true })
 
   const create = (data: Partial<User> & Pick<User, 'email' | 'name' | 'role'>) =>
     payload.create({
