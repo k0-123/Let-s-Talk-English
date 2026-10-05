@@ -3,18 +3,21 @@
 An IELTS Speaking practice and student-tracking web app. Students practise question sets, the app records each
 one, their educator can see it, and **a practised set is never offered to that student again**.
 
-- **Students** pick a category (IELTS Part 1, 2, 3), get up to 5 new sets, reveal sample answers, vocabulary and tips
-  on tap, mark sets as practised, see their history, and can start a new practice cycle.
-- **Educators** (approved by the admin) share an invite code, see their students' progress and history, browse what
-  each student hasn't done, and mark sets as covered in live sessions.
-- **The admin** manages question sets and categories, bulk-imports sets from CSV/JSON, approves educators and manages
-  users.
+- **Students** get a home dashboard (weekly goal, streak, practice calendar, progress by part), practise sets with
+  a Part 2 timer, record and play back their answers, get **AI feedback** from Claude on what they said, mark sets
+  as practised with a confidence rating, and follow their history.
+- **Educators** (approved by the admin) share an invite code, see who is active or slipping, assign sets with due
+  dates, keep private notes, mark sets covered in live sessions, and export progress as CSV.
+- **The admin** manages question sets and categories, bulk-imports sets from CSV/JSON, approves educators, and sees
+  usage at a glance on the admin dashboard.
+- Light and dark themes, built for phones first. A native **Android/iOS app** is planned in `mobile/`
+  ([docs/mobile-app-plan.md](docs/mobile-app-plan.md)).
 
 Built with Next.js 16, Payload 3 (auth, access rules and the admin panel), PostgreSQL and Tailwind CSS. See
 [docs/architecture.md](docs/architecture.md).
 
-> **Status:** V1 features are complete and tested; the app runs locally. Hosting isn't decided yet. See
-> [docs/v1-status.md](docs/v1-status.md).
+> **Status:** version 4 ([CHANGELOG.md](CHANGELOG.md)). Runs locally; hosting isn't decided yet. See
+> [docs/status.md](docs/status.md).
 
 ## Run it locally
 
@@ -53,11 +56,17 @@ You need **Node.js 20.9+** (22 recommended) and **PostgreSQL 16**.
    | Email | Role | Goes to |
    |---|---|---|
    | `admin@example.com` | Admin | `/admin` (admin panel) and `/import` |
-   | `educator@example.com` | Approved educator | `/educator` |
-   | `student@example.com` | Student, linked to the educator | `/practice` |
+   | `educator@example.com` | Approved educator with 4 demo students | `/educator` |
+   | `student@example.com` | Student with some practice history | `/dashboard` |
+
+   `priya@`, `arjun@` and `meera@example.com` are more demo students with different activity levels.
 
 **Emails:** without SMTP settings, account confirmation and password-reset emails are **printed in the terminal**
 running `npm run dev`. Copy the link from there. To send real emails, fill in the `SMTP_*` settings in `.env`.
+
+**AI feedback:** add `ANTHROPIC_API_KEY=...` to `.env` to switch it on (see [docs/ai-feedback.md](docs/ai-feedback.md)
+for costs and limits). To try the screens without a key, start the app with `AI_FAKE=true npm run dev`, which returns
+made-up feedback.
 
 **Starting from an empty database instead:** skip `npm run seed`, open http://localhost:3000/admin and create the
 first account (it becomes the admin), then add categories and import sets.
@@ -80,9 +89,10 @@ first account (it becomes the admin), then add categories and import sets.
 ## Tests
 
 - **Integration tests** (`tests/int`) run against a real Postgres database: every access rule, the never-repeat rule,
-  cycles, invite codes and the importer. **Unit tests** (`tests/unit`) cover import parsing.
-- **End-to-end tests** (`tests/e2e`) drive a real browser through the student, educator and admin journeys and the
-  access rules, at desktop and phone sizes. They build their database from the committed migrations.
+  cycles, invite codes, assignments, notes, AI feedback (with a fake reviewer) and the importer. **Unit tests** (`tests/unit`) cover import parsing.
+- **End-to-end tests** (`tests/e2e`) drive a real browser through the student, educator and admin journeys, the
+  speaking tools (with a fake microphone), AI feedback, assignments, notes, CSV export, dark mode and the access
+  rules, at desktop and phone sizes. They build their database from the committed migrations.
 - First time only: `npx playwright install chromium`.
 - **CI** (`.github/workflows/ci.yml`) runs lint, type-check, all tests and a production build on every push and pull
   request.
@@ -106,7 +116,10 @@ docs/                plan, scope, guides and design notes
 | Document | For |
 |---|---|
 | [docs/execution-plan.md](docs/execution-plan.md) | The V1 execution plan |
-| [docs/v1-status.md](docs/v1-status.md) | What's done, what's waiting on the client or on hosting |
+| [docs/status.md](docs/status.md) | What's done, what's waiting on the client or on hosting |
+| [CHANGELOG.md](CHANGELOG.md) | What changed in each version |
+| [docs/ai-feedback.md](docs/ai-feedback.md) | How AI feedback works, what it costs, how to switch it on |
+| [docs/mobile-app-plan.md](docs/mobile-app-plan.md) | The plan for the Android/iOS app |
 | [docs/scope.md](docs/scope.md) | One-page scope for the client to confirm and sign |
 | [docs/admin-guide.md](docs/admin-guide.md) | How the client runs the app day to day |
 | [docs/import-format.md](docs/import-format.md) | The CSV/JSON format for question sets |

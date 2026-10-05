@@ -11,6 +11,12 @@ For the person who runs Let's Talk English day to day. You manage everything fro
 - The admin panel's left menu has two groups: **Content** (question sets, categories, media) and **People** (users,
   practice logs). At the bottom are links to **Bulk import** and **Open the app**.
 
+## Overview
+
+The admin dashboard opens with an **Overview**: educators waiting for approval (click to review them), students,
+new accounts, students active in the last 7 days, sets practised this week, published sets and AI feedback used
+today. Below it is a link to download **all practice logs as a CSV** file.
+
 ## Categories
 
 **Content → Categories.** Students pick a category before they get new sets (by default IELTS Part 1, 2 and 3).
@@ -82,6 +88,12 @@ Only give the **Admin** role to people who should manage all content and users.
 
 **People → Practice logs** lists every practised or covered set: student, set, date, who marked it and the cycle.
 It's mostly for checking. Deleting a log makes that set "new" again for the student in that cycle.
+
+## AI feedback
+
+Students can ask Claude for feedback on their answers once an Anthropic API key is set (see
+[ai-feedback.md](ai-feedback.md) for setup and costs). **People → AI feedback** lists every request with its token
+counts, which is how you can check what it costs.
 
 ## Emails
 

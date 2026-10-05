@@ -34,6 +34,12 @@ Defined in `src/collections/`. Types are generated into `src/payload-types.ts` (
 | `question-sets` | topic, category, status (`draft` / `published`), questions[] {question, answer}, vocabulary[] {term, meaning}, tips, image (→ media), code (optional unique reference used by imports) |
 | `practice-logs` | student, questionSet, practisedAt, markedBy (`student` / `educator` / `admin`), cycle |
 | `media` | uploaded images (local `./media` folder), alt text |
+| `assignments` | educator, student, questionSet, note, dueDate; unique (student, questionSet). "Done" is derived, not stored |
+| `student-notes` | educator, student, body (private to the author) |
+| `ai-feedback` | student, questionSet, questionIndex, question, answerText, result (JSON), model, token counts |
+
+Users also have `weeklyGoal`, `theme` and `onboardingDismissed`; practice logs have `confidence` (1–5) and
+`speakingSeconds`.
 
 ## The core rule: never repeat a set
 
@@ -46,6 +52,20 @@ Defined in `src/collections/`. Types are generated into `src/payload-types.ts` (
 - The log's `cycle` and date are always set on the server (a `beforeValidate` hook), never taken from the browser.
 - **Cycles:** "Start a new practice cycle" increments `users.cycle`. Every set becomes new again, and old logs stay
   in the history with their cycle number.
+
+## Version 4 features
+
+| Feature | Where |
+|---|---|
+| Streaks, activity calendar, weekly goal, activity status | `src/lib/progress.ts`, days counted in `TZ` (`src/lib/dates.ts`) |
+| Assignments (done = practised in the current cycle) | `src/lib/assignments.ts` |
+| Private notes | `src/lib/notes.ts` |
+| AI feedback | `src/lib/ai-feedback.ts`, see [ai-feedback.md](ai-feedback.md) |
+| CSV exports | `src/lib/exports.ts`, route handlers under `src/app/(frontend)/educator/**/export` and `/exports/practice-logs.csv` |
+| Admin usage overview | `src/lib/stats.ts`, `src/components/admin/Overview.tsx` (Payload `beforeDashboard`) |
+| Speaking tools (timer, recorder, transcript) | `src/components/speaking/` (client-only browser APIs; audio never uploaded) |
+| Charts | `src/components/charts/` (hand-built SVG; one sequential hue, text alternatives) |
+| Theme | `src/lib/theme.ts`: a cookie read on the server plus a tiny pre-paint script, so there is no flash |
 
 ## Where access is enforced
 

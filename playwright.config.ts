@@ -18,6 +18,8 @@ const serverEnv = {
   RATE_LIMIT_DISABLED: 'true',
   // The database is built from migrations in global setup; never push schema changes.
   PAYLOAD_DB_PUSH: 'false',
+  // Deterministic AI feedback; tests never call the real API.
+  AI_FAKE: 'true',
   SMTP_HOST: '',
 }
 
@@ -37,9 +39,11 @@ export default defineConfig({
     baseURL: E2E_BASE_URL,
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
-    launchOptions: process.env.PLAYWRIGHT_CHROMIUM_PATH
-      ? { executablePath: process.env.PLAYWRIGHT_CHROMIUM_PATH }
-      : undefined,
+    launchOptions: {
+      // A fake microphone, so recording can be tested without a real device or a permission prompt.
+      args: ['--use-fake-ui-for-media-stream', '--use-fake-device-for-media-stream'],
+      ...(process.env.PLAYWRIGHT_CHROMIUM_PATH ? { executablePath: process.env.PLAYWRIGHT_CHROMIUM_PATH } : {}),
+    },
   },
   projects: [
     { name: 'desktop-chrome', use: { ...devices['Desktop Chrome'] } },
@@ -47,7 +51,7 @@ export default defineConfig({
     {
       name: 'mobile-chrome',
       use: { ...devices['Pixel 7'] },
-      testMatch: /student\.e2e\.spec\.ts/,
+      testMatch: /(student|v4-student)\.e2e\.spec\.ts/,
     },
   ],
   webServer: {

@@ -3,6 +3,7 @@
 import { useState } from 'react'
 
 import type { DayCount } from '@/lib/progress'
+import { MONTHS, formatDayKey } from '@/lib/utils'
 
 const CELL = 12
 const GAP = 3
@@ -11,10 +12,7 @@ const DAY_LABELS = ['Mon', '', 'Wed', '', 'Fri', '', '']
 
 const level = (count: number): number => (count <= 0 ? 0 : count === 1 ? 1 : count === 2 ? 2 : count <= 4 ? 3 : 4)
 
-const formatDay = (day: string) =>
-  new Intl.DateTimeFormat('en-GB', { weekday: 'short', day: 'numeric', month: 'short', timeZone: 'UTC' }).format(
-    new Date(`${day}T00:00:00Z`),
-  )
+const formatDay = formatDayKey
 
 /**
  * GitHub-style practice calendar: one column per week (Monday first), one
@@ -43,7 +41,7 @@ export const ActivityHeatmap = ({ days, today }: { days: DayCount[]; today: stri
     if (!first) continue
     const date = new Date(`${first.day}T00:00:00Z`)
     if (w === 0 || date.getUTCDate() <= 7) {
-      monthLabels.push({ x: labelWidth + w * (CELL + GAP), label: date.toLocaleString('en-GB', { month: 'short', timeZone: 'UTC' }) })
+      monthLabels.push({ x: labelWidth + w * (CELL + GAP), label: MONTHS[date.getUTCMonth()] })
     }
   }
 

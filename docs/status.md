@@ -1,9 +1,12 @@
-# V1 status
+# Status
 
-Where V1 stands against the [execution plan](execution-plan.md). Last updated: 5 Oct 2026.
+Where the project stands against the [execution plan](execution-plan.md). Current version: **4.0.0**
+([CHANGELOG.md](../CHANGELOG.md)). Last updated: 6 Oct 2026.
 
-**Summary:** every feature in the V1 Definition is built and covered by automated tests. It runs locally. What's left
+**Summary:** every feature in the V1 Definition is built and covered by automated tests, plus the version 4 upgrades
+(dashboard, speaking tools, AI feedback, assignments, notes, exports, dark mode). It runs locally. What's left
 needs the client (content, decisions, UAT) or a hosting decision (domain, SSL, email domain, backups, monitoring).
+The Android/iOS app is planned in [mobile-app-plan.md](mobile-app-plan.md).
 
 Legend: ✅ done · ⏳ waiting on the client · 🏠 waiting on the hosting decision
 
@@ -72,7 +75,8 @@ Hosting is not decided, so V1 currently runs locally only. Once it is decided:
 7. **Monitoring:** Sentry (or similar) for errors and an uptime monitor.
 8. **First admin:** open `/admin` on the new site and create the client's account (the first account is always admin),
    then create the categories.
-9. **Legal pages:** privacy policy and terms (text from the client).
+9. **Legal pages:** `/privacy` and `/terms` have draft text; the client must review it and fill in `[CONTACT_EMAIL]`.
+10. **AI feedback:** an Anthropic API key (`ANTHROPIC_API_KEY`) and a monthly spending limit on the Anthropic account.
 
 ## Decisions made during the build
 
